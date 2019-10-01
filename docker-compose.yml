@@ -1,0 +1,84 @@
+version: '3.7'
+services:
+  lb:
+    container_name: lb
+    restart: always
+    image: nginx:1.16.1
+    volumes:
+      - ./lb/config:/etc/nginx/conf.d
+    ports:
+      - "8080:8000"
+    networks:
+      fuk_net:
+        ipv4_address: 172.20.0.10
+
+  front_web:
+    container_name: front_web
+    restart: always
+    image: nginx:1.16.1
+    volumes:
+      - ./front_web/config:/etc/nginx/conf.d
+      - ./front_web/dist:/var/www/html/dist
+    expose:
+      - "8000"
+    networks:
+      fuk_net:
+        ipv4_address: 172.20.0.11
+
+
+  api_web:
+    container_name: api_web
+    restart: always
+    image: nginx:1.16.1
+    volumes:
+      - ./api_web/config:/etc/nginx/conf.d
+    expose:
+      - "8000"
+    networks:
+      fuk_net:
+        ipv4_address: 172.20.0.12
+
+  api_app:
+    container_name: api_app
+    restart: always
+    build: ./api_app/
+    depends_on:
+      - api_web
+      - api_db
+    expose:
+      - "8001"
+    command: bash -c "python manage.py makemigrations && python manage.py migrate && uwsgi --ini api_app_wsgi.ini"
+    volumes:
+      - "./api_app/:/opt/apps"
+    networks:
+      fuk_net:
+        ipv4_address: 172.20.0.13
+
+
+  api_db:
+    container_name: api_db
+    restart: always
+    image: mysql:8.0.17
+    ports:
+      - "3306:3306"
+    volumes:
+      - ./api_db/init:/docker-entrypoint-initdb.d
+      - ./api_db/data:/var/lib/mysql
+      - ./api_db/conf/:/etc/mysql/conf.d
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: api_db
+      MYSQL_USER: fuk
+      MYSQL_PASSWORD: fuk
+    networks:
+      fuk_net:
+        ipv4_address: 172.20.0.14
+
+
+networks:
+  fuk_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.20.0.0/24

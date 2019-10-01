@@ -1,0 +1,20 @@
+.DS_Store
+
+# python
+/bin
+/include
+/lib
+pyvenv.cfg
+
+# api_app
+/api_app/api_app/__pycache__
+/api_app/rest/__pycache__
+/api_app/rest/migrations/__pycache__
+
+# front_app
+/front_web/.DS_Store
+/front_web/node_modules
+/front_web//dist
+
+#api_db
+/api_db/data

@@ -1,0 +1,3 @@
+FROM nginx:1.16.1
+
+ADD ./config/lb.conf /etc/nginx/conf.d
