@@ -14,7 +14,7 @@ pyvenv.cfg
 # front_app
 /front-web/.DS_Store
 /front-web/node_modules
-/front-web//dist
+/front-web/dist
 
 #api-db
 /api-db/data

@@ -9,7 +9,7 @@ services:
     ports:
       - "8080:8000"
     networks:
-      fuk_net:
+      fuk-net:
         ipv4_address: 172.20.0.10
 
   front-web:
@@ -22,7 +22,7 @@ services:
     expose:
       - "8000"
     networks:
-      fuk_net:
+      fuk-net:
         ipv4_address: 172.20.0.11
 
 
@@ -35,7 +35,7 @@ services:
     expose:
       - "8000"
     networks:
-      fuk_net:
+      fuk-net:
         ipv4_address: 172.20.0.12
 
   api-app:
@@ -47,11 +47,11 @@ services:
       - api-db
     expose:
       - "8001"
-    command: bash -c "python manage.py makemigrations && python manage.py migrate && uwsgi --ini api-app_wsgi.ini"
+    command: bash -c "pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate && uwsgi --ini api-app_wsgi.ini"
     volumes:
       - "./api-app/:/opt/apps"
     networks:
-      fuk_net:
+      fuk-net:
         ipv4_address: 172.20.0.13
 
 
@@ -70,13 +70,14 @@ services:
       MYSQL_DATABASE: api-db
       MYSQL_USER: fuk
       MYSQL_PASSWORD: fuk
+      TZ: "Asia/Tokyo"
     networks:
-      fuk_net:
+      fuk-net:
         ipv4_address: 172.20.0.14
 
 
 networks:
-  fuk_net:
+  fuk-net:
     driver: bridge
     ipam:
       driver: default
