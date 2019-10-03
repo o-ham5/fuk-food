@@ -6,15 +6,15 @@
 /lib
 pyvenv.cfg
 
-# api_app
-/api_app/api_app/__pycache__
-/api_app/rest/__pycache__
-/api_app/rest/migrations/__pycache__
+# api-app
+/api-app/api-app/__pycache__
+/api-app/rest/__pycache__
+/api-app/rest/migrations/__pycache__
 
 # front_app
-/front_web/.DS_Store
-/front_web/node_modules
-/front_web//dist
+/front-web/.DS_Store
+/front-web/node_modules
+/front-web//dist
 
-#api_db
-/api_db/data
+#api-db
+/api-db/data

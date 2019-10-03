@@ -1,4 +1,4 @@
 FROM nginx:1.16.1
 
-ADD ./config/api_web.conf /etc/nginx/conf.d
+ADD ./config/api-web.conf /etc/nginx/conf.d
 ADD ./config/uwsgi_params /etc/nginx

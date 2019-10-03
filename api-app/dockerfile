@@ -7,4 +7,4 @@ RUN pip install --no-cache-dir -r $APP_PATH/requirements.txt
 
 WORKDIR $APP_PATH
 
-# CMD ["uwsgi","--ini","api_app_wsgi.ini"]
+# CMD ["uwsgi","--ini","api-app_wsgi.ini"]

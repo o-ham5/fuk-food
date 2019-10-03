@@ -1,4 +1,4 @@
-use api_db;
+use api-db;
 
 CREATE TABLE users (
     id INT AUTO_INCREMENT NOT NULL PRIMARY KEY,
