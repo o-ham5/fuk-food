@@ -85,6 +85,10 @@ export default {
           })
           .then(() => {
             this.progress = false;
+            this.$emit("close");
+            this.username = null;
+            this.email = null;
+            this.password = null;
           });
       });
     }

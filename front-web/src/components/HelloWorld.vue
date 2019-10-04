@@ -12,6 +12,10 @@
 
       <v-flex mb-4>
         <h1 class="display-2 font-weight-bold mb-3">FUKFOOD</h1>
+        <h2 v-if="this.username" class="headline font-weight-bold mb-3">
+          Welcome!! {{ this.username }}
+        </h2>
+
         <p class="subheading font-weight-regular">
           For help and collaboration with other Vuetify developers,
           <br />please join our online
@@ -22,8 +26,6 @@
       </v-flex>
 
       <v-flex mb-5 xs12>
-        <h2 class="headline font-weight-bold mb-3">What's next?</h2>
-
         <v-layout justify-center>
           <a
             v-for="(next, i) in whatsNext"
@@ -70,6 +72,8 @@
 </template>
 
 <script>
+import store from "../store";
+
 export default {
   data: () => ({
     ecosystem: [
@@ -122,6 +126,11 @@ export default {
         href: "https://vuetifyjs.com/getting-started/frequently-asked-questions"
       }
     ]
-  })
+  }),
+  computed: {
+    username: function() {
+      return store.state.user.username;
+    }
+  }
 };
 </script>

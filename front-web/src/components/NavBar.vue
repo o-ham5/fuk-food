@@ -29,7 +29,7 @@
 
       <!-- sign up dialog -->
       <v-dialog v-model="signup" max-width="400">
-        <SignUpForm :onregister="handleSignUp" />
+        <SignUpForm :onregister="handleSignUp" @close="closeSignUp" />
       </v-dialog>
       <!-- sign in dialog -->
       <v-dialog v-model="signin" max-width="500">
@@ -87,8 +87,11 @@ export default {
       return Auth.register(registerInfo)
         .then(({ username, email }) => {
           console.log(username);
-          // router.pushで異なるurlに遷移できる。
-          //   this.$router.push({ name: "tracker_list" });
+          let authInfo = {
+            email: registerInfo.email,
+            password: registerInfo.password
+          };
+          this.handleSignIn(authInfo);
         })
         .catch(err => this.throwReject(err));
     },
@@ -98,6 +101,9 @@ export default {
     },
     closeSignIn() {
       this.signin = false;
+    },
+    closeSignUp() {
+      this.signup = false;
     }
   }
 };
