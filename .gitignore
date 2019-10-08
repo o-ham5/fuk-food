@@ -16,15 +16,5 @@ pyvenv.cfg
 /front-web/node_modules
 /front-web/dist
 
-<<<<<<< HEAD
-# Editor directories and files
-.idea
-*.suo
-*.ntvs*
-*.njsproj
-*.sln
-*.sw?
-=======
 #api-db
 /api-db/data
->>>>>>> 334ce4576e3f2f1bdc15763363fae1c9c0e1eccc
