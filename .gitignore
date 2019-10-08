@@ -1,19 +1,22 @@
 .DS_Store
-node_modules
-/dist
 
-/tests/e2e/reports/
-selenium-debug.log
+# python
+/bin
+/include
+/lib
+pyvenv.cfg
 
-# local env files
-.env.local
-.env.*.local
+# api-app
+/api-app/api-app/__pycache__
+/api-app/rest/__pycache__
+/api-app/rest/migrations/__pycache__
 
-# Log files
-npm-debug.log*
-yarn-debug.log*
-yarn-error.log*
+# front_app
+/front-web/.DS_Store
+/front-web/node_modules
+/front-web/dist
 
+<<<<<<< HEAD
 # Editor directories and files
 .idea
 *.suo
@@ -21,3 +24,7 @@ yarn-error.log*
 *.njsproj
 *.sln
 *.sw?
+=======
+#api-db
+/api-db/data
+>>>>>>> 334ce4576e3f2f1bdc15763363fae1c9c0e1eccc

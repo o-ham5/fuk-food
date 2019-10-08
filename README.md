@@ -1,39 +1,44 @@
-# fuk-food
+# fuk-project
 
-## Project setup
-```
-npm install
-```
+## prerequisite
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+- Docker version 19.03.1, build 74b1e89
+- docker-compose version 1.24.1, build 4667896b
+- ndenv 0.4.0 https://qiita.com/griffin3104/items/a8ae5b271bf9246eeadd
+- node.js v10.15.3
+- python 3.6.8
 
-### Compiles and minifies for production
-```
-npm run build
-```
+## application architecture
 
-### Run your tests
-```
-npm run test
-```
+![architecture](image/architecture.png)
 
-### Lints and fixes files
-```
-npm run lint
-```
+## install
 
-### Run your end-to-end tests
 ```
-npm run test:e2e
+# install for api server development
+$ pip install -r requirements.txt
+
+# install for front app development
+$ cd front-web
+$ ndenv install v10.15.3
+$ ndenv local v10.15.3
+$ npm install
 ```
 
-### Run your unit tests
+## start front app development
+
 ```
-npm run test:unit
+$ cd front-web
+$ npm run express    # start express api mock server
+$ npm run serve    # start vue devserver
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+## deploy
+
+```
+$ cd front-web
+$ npm run build
+$ cd ..
+$ docker-compose build
+$ docker-compose up -d
+```
