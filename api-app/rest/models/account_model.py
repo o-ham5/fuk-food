@@ -1,3 +1,4 @@
+import uuid
 from django.db import models
 from django.contrib.auth.models import (
     BaseUserManager, AbstractBaseUser, _user_has_perm
@@ -13,20 +14,15 @@ class AccountManager(BaseUserManager):
         if not request_data['email']:
             raise ValueError('Users must have an email address.')
 
-        if request_data.get('profile'):
-            profile = request_data['profile']
-        else:
-            profile = ""
-
         user = self.model(
             username=request_data['username'],
             email=self.normalize_email(request_data['email']),
             is_active=True,
             last_login=now,
             date_joined=now,
-            profile=profile
         )
 
+        # AbstractBaseUserのメソッドを使ってパスワードを付与
         user.set_password(request_data['password'])
         user.save(using=self._db)
         return user
@@ -47,14 +43,16 @@ class AccountManager(BaseUserManager):
 
 
 class Account(AbstractBaseUser):
-    username    = models.CharField(_('username'), max_length=30, unique=True)
-    first_name  = models.CharField(_('first name'), max_length=30, blank=True)
-    last_name   = models.CharField(_('last name'), max_length=30, blank=True)
-    email       = models.EmailField(verbose_name='email address', max_length=255, unique=True)
-    profile     = models.CharField(_('profile'), max_length=255, blank=True)
-    is_active   = models.BooleanField(default=True)
-    is_staff    = models.BooleanField(default=False)
-    is_admin    = models.BooleanField(default=False)
+    account_id = models.UUIDField(
+        primary_key=True, default=uuid.uuid4, editable=False)
+    username = models.CharField(_('username'), max_length=30, unique=True)
+    email = models.EmailField(verbose_name='email address',
+                              max_length=255, unique=True)
+    bias = models.FloatField(default=0)
+    variance = models.FloatField(default=0)
+    is_active = models.BooleanField(default=True)
+    is_staff = models.BooleanField(default=False)
+    is_admin = models.BooleanField(default=False)
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
     objects = AccountManager()
@@ -71,13 +69,10 @@ class Account(AbstractBaseUser):
     def has_module_perms(self, app_label):
         return self.is_admin
 
-    def get_short_name(self):
-        return self.first_name
-
     @property
     def is_superuser(self):
         return self.is_admin
 
     class Meta:
-        db_table = 'api_user'
+        db_table = 'accounts'
         swappable = 'AUTH_USER_MODEL'

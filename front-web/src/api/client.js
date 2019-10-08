@@ -1,10 +1,13 @@
 import axiosBase from "axios";
+import store from "../store";
 
+// const token = store.state.auth.token;
 const axios = axiosBase.create({
   baseURL: process.env.VUE_APP_API_ORIGIN, // バックエンドB のURL:port を指定する
   headers: {
     "Content-Type": "application/json",
     "X-Requested-With": "XMLHttpRequest"
+    // Authorization: "JWT " + token
   },
   responseType: "json"
 });

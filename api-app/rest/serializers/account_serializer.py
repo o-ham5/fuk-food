@@ -1,15 +1,18 @@
 from django.contrib.auth import update_session_auth_hash
 from rest_framework import serializers
 
-from .models import Account, AccountManager
+from ..models.account_model import Account, AccountManager
 
 
 class AccountSerializer(serializers.ModelSerializer):
+    # passwordについてoverrideしている
     password = serializers.CharField(write_only=True, required=False)
+    # モデルからserializerが自動的に生成される
 
     class Meta:
         model = Account
-        fields = ('id', 'username', 'email', 'profile', 'password')
+        fields = ('account_id', 'username', 'email',
+                  'bias', 'variance', 'password')
 
     def create(self, validated_data):
         return Account.objects.create_user(request_data=validated_data)

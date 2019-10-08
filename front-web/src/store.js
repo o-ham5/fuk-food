@@ -11,6 +11,7 @@ const state = {
     token: null
   },
   user: {
+    account_id: null,
     username: null,
     email: null
   }

@@ -9,6 +9,7 @@ export default {
       token: null
     };
     state.user = {
+      account_id: null,
       username: null,
       email: null
     };

@@ -14,7 +14,7 @@ export default {
   register: registerInfo => {
     return new Promise((resolve, reject) => {
       client
-        .post("/api/register/", registerInfo)
+        .post("/api/account/register/", registerInfo)
         .then(res =>
           resolve({ username: res.data.username, email: res.data.email })
         )
@@ -26,12 +26,16 @@ export default {
   getUserInfo: token => {
     return new Promise((resolve, reject) => {
       client
-        .get("/api/user-info/", {
+        .get("/api/account/info/", {
           headers: { Authorization: "JWT " + token },
           data: {}
         })
         .then(res =>
-          resolve({ username: res.data.username, email: res.data.email })
+          resolve({
+            account_id: res.data.account_id,
+            username: res.data.username,
+            email: res.data.email
+          })
         )
         .catch(err => {
           reject(new Error(err.response.data.message || err.message));

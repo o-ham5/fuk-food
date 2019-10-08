@@ -9,14 +9,16 @@ from django.http import HttpResponse, Http404
 from rest_framework import status, viewsets, filters
 from rest_framework.views import APIView
 
-from .serializer import AccountSerializer
-from .models import Account, AccountManager
+from ..serializers.account_serializer import AccountSerializer
+from ..models.account_model import Account, AccountManager
 
 # ユーザ作成のView(POST)
 
 
 class AuthRegister(generics.CreateAPIView):
+    # 以下の3つはcreateAPIViewに必ず指定する必要のある変数。
     permission_classes = (permissions.AllowAny,)
+    # このクエリセットをベースとして何かを行う
     queryset = Account.objects.all()
     serializer_class = AccountSerializer
 
@@ -38,9 +40,9 @@ class AuthInfoGetView(generics.RetrieveAPIView):
 
     def get(self, request, format=None):
         return Response(data={
+            'account_id': request.user.account_id,
             'username': request.user.username,
             'email': request.user.email,
-            'profile': request.user.profile,
         },
             status=status.HTTP_200_OK)
 
@@ -55,6 +57,7 @@ class AuthInfoUpdateView(generics.UpdateAPIView):
 
     def get_object(self):
         try:
+            # クエリセットから特定のオブジェクトを抽出する。
             instance = self.queryset.get(email=self.request.user)
             return instance
         except Account.DoesNotExist:
