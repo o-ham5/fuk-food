@@ -18,5 +18,10 @@ from rest_framework_jwt.views import obtain_jwt_token
 
 urlpatterns = [
     url(r'^api/login/', obtain_jwt_token),
-    url(r'^api/', include('rest.urls')),
+    url(r'^api/account/', include('rest.urls.account_urls')),
+    url(r'^api/area/', include('rest.urls.area_urls')),
+    url(r'^api/genre/', include('rest.urls.genre_urls')),
+    url(r'^api/spot/', include('rest.urls.spot_urls')),
+    url(r'^api/situation/', include('rest.urls.situation_urls')),
+    url(r'^api/kuchikomi/', include('rest.urls.kuchikomi_urls')),
 ]

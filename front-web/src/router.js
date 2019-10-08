@@ -1,6 +1,9 @@
 import Vue from "vue";
 import Router from "vue-router";
-import Home from "./views/Home.vue";
+import Home from "@/views/Home.vue";
+import MetaView from "@/views/MetaView.vue";
+import SpotView from "@/views/SpotView.vue";
+import KuchikomiView from "@/views/KuchikomiView.vue";
 import store from "./store";
 
 Vue.use(Router);
@@ -27,6 +30,24 @@ const router = new Router({
       path: "/",
       name: "home",
       component: Home,
+      meta: { requiresAuth: false }
+    },
+    {
+      path: "/spot",
+      name: "spot",
+      component: SpotView,
+      meta: { requiresAuth: false }
+    },
+    {
+      path: "/kuchikomi",
+      name: "kuchikomi",
+      component: KuchikomiView,
+      meta: { requiresAuth: true }
+    },
+    {
+      path: "/meta",
+      name: "meta",
+      component: MetaView,
       meta: { requiresAuth: false }
     }
   ]

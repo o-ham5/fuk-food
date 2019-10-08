@@ -1,42 +1,40 @@
 import client from "./client";
 
 export default {
-  login: authInfo => {
-    return new Promise((resolve, reject) => {
-      client
-        .post("/api/login/", authInfo)
-        .then(res => resolve({ token: res.data.token }))
-        .catch(err => {
-          reject(new Error(err.response.data.message || err.message));
-        });
-    });
-  },
   register: registerInfo => {
     return new Promise((resolve, reject) => {
       client
-        .post("/api/account/register/", registerInfo)
+        .post("/api/situation/register/", registerInfo)
         .then(res =>
-          resolve({ username: res.data.username, email: res.data.email })
+          resolve({ id: res.data.id, situation_name: res.data.situation_name })
         )
         .catch(err => {
           reject(new Error(err.response.data.message || err.message));
         });
     });
   },
-  getUserInfo: token => {
+  getInfo: id => {
     return new Promise((resolve, reject) => {
+      const url = "/api/situation/info/" + toString(id) + "/";
       client
-        .get("/api/account/info/", {
-          headers: { Authorization: "JWT " + token },
-          data: {}
-        })
+        .get(url)
         .then(res =>
           resolve({
-            account_id: res.data.account_id,
-            username: res.data.username,
-            email: res.data.email
+            situation_id: res.data.id,
+            situation_name: res.data.situation_name
           })
         )
+        .catch(err => {
+          reject(new Error(err.response.data.message || err.message));
+        });
+    });
+  },
+  getList: () => {
+    return new Promise((resolve, reject) => {
+      const url = "/api/situation/list/";
+      client
+        .get(url)
+        .then(res => resolve(res.data))
         .catch(err => {
           reject(new Error(err.response.data.message || err.message));
         });
