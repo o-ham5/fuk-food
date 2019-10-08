@@ -10,6 +10,11 @@ pyvenv.cfg
 /api-app/api-app/__pycache__
 /api-app/rest/__pycache__
 /api-app/rest/migrations/__pycache__
+/api-app/rest/models/__pycache__
+/api-app/rest/serializers/__pycache__
+/api-app/rest/urls/__pycache__
+/api-app/rest/views/__pycache__
+
 
 # front_app
 /front-web/.DS_Store
