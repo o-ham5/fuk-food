@@ -1,5 +1,18 @@
 <template>
   <v-container fluid>
+    <v-row id='mainVisual'>
+      <div id="fukuoka">
+        <img id='prefecture' class="fuk-parts" src="../assets/fukuoka.png" alt="福岡県">
+        <img id="logo" class="" src="../assets/fukfood-logo.png" alt="fuk-food">
+        <div id='parts'>
+            <img id='ramen' class="fuk-parts" src="../assets/ramen2.png" alt="ラーメン">
+            <img id='mentaiko' class="fuk-parts" src="../assets/mentaiko2.png" alt="明太子">
+            <img id="otya" class="fuk-parts" src="../assets/otya2.png" alt="お茶">
+            <img id="kaki" class="fuk-parts" src="../assets/kaki2.png" alt="牡蠣">
+            <img id="yakikare" class="fuk-parts" src="../assets/yakikare2.png" alt="焼きカレー">
+        </div>
+      </div>
+    </v-row>
     <v-row align="center" justify="center">
       <v-col>
         <v-card @click="toKuchikomi()">
@@ -32,17 +45,7 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row id='mainVisual'>
-      <div id="fukuoka">
-        <img id='prefecture' class="fuk-parts" src="../assets/fukuoka.png" alt="福岡県">
-        <div id='parts'>
-            <img id='ramen' class="fuk-parts" src="../assets/ramen2.png" alt="ラーメン">
-            <img id='mentaiko' class="fuk-parts" src="../assets/mentaiko2.png" alt="明太子">
-            <img id="otya" class="fuk-parts" src="../assets/otya2.png" alt="お茶">
-            <img id="kaki" class="fuk-parts" src="../assets/kaki2.png" alt="牡蠣">
-            <img id="yakikare" class="fuk-parts" src="../assets/yakikare2.png" alt="焼きカレー">
-        </div>
-      </div>
+    <v-row>
     </v-row>
   </v-container>
 </template>
@@ -63,6 +66,7 @@ export default {
       otya: undefined,
       kaki: undefined,
       yakikare: undefined,
+      logo: undefined,
       timeline: undefined,
     };
   },
@@ -122,13 +126,21 @@ export default {
       duration: 100,
       y: 0
     });
+    this.logo = new mojs.Html({
+      el: "#logo",
+      scale: { 10: 1 },
+      opacity: { 0: 1 },
+      duration: 1000,
+      easing: "sin.inout",
+      delay: 1500
+    });
     this.timeline = new mojs.Timeline({
       delay: 500,
       onComplete() {
         // this.replay();
       }
     });
-    this.timeline.add(this.ramen, this.mentaiko, this.otya, this.kaki, this.yakikare);
+    this.timeline.add(this.ramen, this.mentaiko, this.otya, this.kaki, this.yakikare, this.logo);
     this.timeline.play();
   },
   computed: {
@@ -167,6 +179,13 @@ export default {
   width: 100%;
   height: 100%;
 }
+
+#logo{
+  display: block;
+  margin: auto;
+  padding-top: 5%;
+}
+
 #ramen {
   top: 60%;
   left: 40%;
