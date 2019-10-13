@@ -1,10 +1,13 @@
 import client from "./client";
 
 export default {
-  register: registerInfo => {
+  register: (registerInfo, token) => {
     return new Promise((resolve, reject) => {
       client
-        .post("/api/area/register/", registerInfo)
+        .post("/api/area/register/", registerInfo, {
+          headers: { Authorization: "JWT " + token },
+          data: {}
+        })
         .then(res =>
           resolve({ id: res.data.id, area_name: res.data.area_name })
         )

@@ -1,7 +1,7 @@
 import axiosBase from "axios";
-import store from "../store";
+import store from "@/store";
 
-// const token = store.state.auth.token;
+// const token = store !== undefined ? store.state.auth.token : null;
 const axios = axiosBase.create({
   baseURL: process.env.VUE_APP_API_ORIGIN, // バックエンドB のURL:port を指定する
   headers: {

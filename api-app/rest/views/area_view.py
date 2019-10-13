@@ -7,16 +7,23 @@ from django.http import HttpResponse, Http404
 
 from rest_framework import status, viewsets, filters
 from rest_framework.views import APIView
+from rest_framework.permissions import BasePermission
 
 from ..serializers.area_serializer import AreaSerializer
 from ..models.area_model import Area
+
+
+class IsAdmin(BasePermission):
+    def has_permission(self, request, view):
+        print(request)
+        return request.user and request.user.is_admin == 1
 
 # ジャンル作成のView(POST)
 
 
 class AreaRegister(generics.CreateAPIView):
-    permission_classes = (permissions.AllowAny,)
-    # permission_classes = (permissions.IsAuthenticated,)
+    # permission_classes = (permissions.AllowAny)
+    permission_classes = (permissions.IsAuthenticated, IsAdmin)
     queryset = Area.objects.all()
     serializer_class = AreaSerializer
 
