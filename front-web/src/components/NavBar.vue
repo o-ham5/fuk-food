@@ -1,6 +1,6 @@
 <template>
   <nav>
-    <v-app-bar flat absolute app color="#EEEEEE">
+    <v-app-bar flat fixed app inverted-scroll scroll-threshold=500 color='transparent'>
       <v-toolbar-title class="text-uppercase grey--text">
         <span class="font-weight-light">FUK</span>
         <span>food</span>

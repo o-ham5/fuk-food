@@ -46,6 +46,7 @@
       </v-col>
     </v-row>
     <v-row>
+      <div style="width: 100%; height: 1000px;"></div>
     </v-row>
   </v-container>
 </template>
@@ -61,6 +62,16 @@ export default {
   data() {
     return {
       message: null,
+      OPTS: {
+        scale: { 0: 1 },
+        duration: 300,
+        y: { 50: -20 },
+        easing: "sin.inout",
+      },
+      OPTS_THEN: {
+        duration: 100,
+        y: 0
+      },
       ramen: undefined,
       mentaiko: undefined,
       otya: undefined,
@@ -73,58 +84,38 @@ export default {
   mounted(){
     this.ramen = new mojs.Html({
       el: "#ramen",
-      scale: { 0: 1 },
-      duration: 300,
-      y: { 50: -20 },
-      easing: "sin.inout",
+      ...this.OPTS,
       delay: 700
     }).then({
-      duration: 100,
-      y: 0
+      ...this.OPTS_THEN,
     });
     this.mentaiko = new mojs.Html({
       el: "#mentaiko",
-      scale: { 0: 1 },
-      duration: 300,
-      y: { 50: -20 },
-      easing: "sin.inout",
+      ...this.OPTS,
       delay: 500
     }).then({
-      duration: 100,
-      y: 0
+      ...this.OPTS_THEN,
     });
     this.otya = new mojs.Html({
       el: "#otya",
-      scale: { 0: 1 },
-      duration: 300,
-      y: { 50: -20 },
-      easing: "sin.inout",
+      ...this.OPTS,
       delay: 900
     }).then({
-      duration: 100,
-      y: 0
+      ...this.OPTS_THEN,
     });
     this.kaki = new mojs.Html({
       el: "#kaki",
-      scale: { 0: 1 },
-      duration: 300,
-      y: { 50: -20 },
-      easing: "sin.inout",
+      ...this.OPTS,
       delay: 1100
     }).then({
-      duration: 100,
-      y: 0
+      ...this.OPTS_THEN,
     });
     this.yakikare = new mojs.Html({
       el: "#yakikare",
-      scale: { 0: 1 },
-      duration: 300,
-      y: { 50: -20 },
-      easing: "sin.inout",
+      ...this.OPTS,
       delay: 1300
     }).then({
-      duration: 100,
-      y: 0
+      ...this.OPTS_THEN,
     });
     this.logo = new mojs.Html({
       el: "#logo",
