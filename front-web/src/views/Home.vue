@@ -1,15 +1,45 @@
 <template>
   <v-container fluid>
-    <v-row id='mainVisual'>
+    <v-row id="mainVisual">
       <div id="fukuoka">
-        <img id='prefecture' class="fuk-parts" src="../assets/fukuoka.png" alt="福岡県">
-        <img id="logo" class="" src="../assets/fukfood-logo.png" alt="fuk-food">
-        <div id='parts'>
-            <img id='ramen' class="fuk-parts" src="../assets/ramen2.png" alt="ラーメン">
-            <img id='mentaiko' class="fuk-parts" src="../assets/mentaiko2.png" alt="明太子">
-            <img id="otya" class="fuk-parts" src="../assets/otya2.png" alt="お茶">
-            <img id="kaki" class="fuk-parts" src="../assets/kaki2.png" alt="牡蠣">
-            <img id="yakikare" class="fuk-parts" src="../assets/yakikare2.png" alt="焼きカレー">
+        <img
+          id="prefecture"
+          class="fuk-parts"
+          src="../assets/fukuoka.png"
+          alt="福岡県"
+        />
+        <img id="logo" class src="../assets/fukfood-logo.png" alt="fuk-food" />
+        <div id="parts">
+          <img
+            id="ramen"
+            class="fuk-parts"
+            src="../assets/ramen2.png"
+            alt="ラーメン"
+          />
+          <img
+            id="mentaiko"
+            class="fuk-parts"
+            src="../assets/mentaiko2.png"
+            alt="明太子"
+          />
+          <img
+            id="otya"
+            class="fuk-parts"
+            src="../assets/otya2.png"
+            alt="お茶"
+          />
+          <img
+            id="kaki"
+            class="fuk-parts"
+            src="../assets/kaki2.png"
+            alt="牡蠣"
+          />
+          <img
+            id="yakikare"
+            class="fuk-parts"
+            src="../assets/yakikare2.png"
+            alt="焼きカレー"
+          />
         </div>
       </div>
     </v-row>
@@ -66,7 +96,7 @@ export default {
         scale: { 0: 1 },
         duration: 300,
         y: { 50: -20 },
-        easing: "sin.inout",
+        easing: "sin.inout"
       },
       OPTS_THEN: {
         duration: 100,
@@ -78,44 +108,51 @@ export default {
       kaki: undefined,
       yakikare: undefined,
       logo: undefined,
-      timeline: undefined,
+      timeline: undefined
     };
   },
-  mounted(){
+  computed: {
+    authorized: function() {
+      return (
+        store.state.auth.token !== null && store.state.auth.token !== undefined
+      );
+    }
+  },
+  mounted() {
     this.ramen = new mojs.Html({
       el: "#ramen",
       ...this.OPTS,
       delay: 700
     }).then({
-      ...this.OPTS_THEN,
+      ...this.OPTS_THEN
     });
     this.mentaiko = new mojs.Html({
       el: "#mentaiko",
       ...this.OPTS,
       delay: 500
     }).then({
-      ...this.OPTS_THEN,
+      ...this.OPTS_THEN
     });
     this.otya = new mojs.Html({
       el: "#otya",
       ...this.OPTS,
       delay: 900
     }).then({
-      ...this.OPTS_THEN,
+      ...this.OPTS_THEN
     });
     this.kaki = new mojs.Html({
       el: "#kaki",
       ...this.OPTS,
       delay: 1100
     }).then({
-      ...this.OPTS_THEN,
+      ...this.OPTS_THEN
     });
     this.yakikare = new mojs.Html({
       el: "#yakikare",
       ...this.OPTS,
       delay: 1300
     }).then({
-      ...this.OPTS_THEN,
+      ...this.OPTS_THEN
     });
     this.logo = new mojs.Html({
       el: "#logo",
@@ -131,15 +168,15 @@ export default {
         // this.replay();
       }
     });
-    this.timeline.add(this.ramen, this.mentaiko, this.otya, this.kaki, this.yakikare, this.logo);
+    this.timeline.add(
+      this.ramen,
+      this.mentaiko,
+      this.otya,
+      this.kaki,
+      this.yakikare,
+      this.logo
+    );
     this.timeline.play();
-  },
-  computed: {
-    authorized: function() {
-      return (
-        store.state.auth.token !== null && store.state.auth.token !== undefined
-      );
-    }
   },
   methods: {
     toKuchikomi() {
@@ -148,14 +185,14 @@ export default {
       } else {
         this.message = "サインインしてください！";
       }
-    },
+    }
   }
 };
 </script>
 
 <style>
-#mainVisual{
-  background: linear-gradient(to top, lightskyblue, #FFF);
+#mainVisual {
+  background: linear-gradient(to top, lightskyblue, #fff);
 }
 #fukuoka {
   position: relative;
@@ -171,7 +208,7 @@ export default {
   height: 100%;
 }
 
-#logo{
+#logo {
   display: block;
   margin: auto;
   padding-top: 5%;

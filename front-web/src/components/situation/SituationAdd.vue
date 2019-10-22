@@ -4,7 +4,7 @@
     <!-- sign up dialog -->
     <v-dialog v-model="add" max-width="400">
       <v-card>
-        <v-form v-model="valid">
+        <v-form v-model="authorized">
           <v-text-field
             v-model="situation_name"
             label="シチュエーション名"
@@ -12,7 +12,7 @@
           ></v-text-field>
           <v-btn
             color="error"
-            :disabled="!valid"
+            :disabled="!authorized"
             class="mr-4"
             @click="handleClick"
             >追加する</v-btn
@@ -52,8 +52,7 @@ export default {
         situation_name: this.situation_name
       };
       return Situation.register(registerInfo)
-        .then(({ id, situation_name }) => {
-          console.log(situation_name);
+        .then(({ situation_id, situation_name }) => {
           this.closeAdd();
         })
         .catch(err => this.throwReject(err));

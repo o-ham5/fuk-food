@@ -6,21 +6,24 @@ export default {
       client
         .post("/api/situation/register/", registerInfo)
         .then(res =>
-          resolve({ id: res.data.id, situation_name: res.data.situation_name })
+          resolve({
+            situation_id: res.data.situation_id,
+            situation_name: res.data.situation_name
+          })
         )
         .catch(err => {
           reject(new Error(err.response.data.message || err.message));
         });
     });
   },
-  getInfo: id => {
+  getInfo: situation_id => {
     return new Promise((resolve, reject) => {
-      const url = "/api/situation/info/" + toString(id) + "/";
+      const url = "/api/situation/info/" + toString(situation_id) + "/";
       client
         .get(url)
         .then(res =>
           resolve({
-            situation_id: res.data.id,
+            situation_id: res.data.situation_id,
             situation_name: res.data.situation_name
           })
         )

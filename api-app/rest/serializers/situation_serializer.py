@@ -7,4 +7,4 @@ class SituationSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Situation
-        fields = ('id', 'situation_name')
+        fields = ('situation_id', 'situation_name')

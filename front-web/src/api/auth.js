@@ -7,7 +7,7 @@ export default {
         .post("/api/login/", authInfo)
         .then(res => resolve({ token: res.data.token }))
         .catch(err => {
-          reject(new Error(err.response.data.message || err.message));
+          reject(err.response.data.detail[0]);
         });
     });
   },
