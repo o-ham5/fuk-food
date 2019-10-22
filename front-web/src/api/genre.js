@@ -6,21 +6,24 @@ export default {
       client
         .post("/api/genre/register/", registerInfo)
         .then(res =>
-          resolve({ id: res.data.id, genre_name: res.data.genre_name })
+          resolve({
+            genre_id: res.data.genre_id,
+            genre_name: res.data.genre_name
+          })
         )
         .catch(err => {
           reject(new Error(err.response.data.message || err.message));
         });
     });
   },
-  getInfo: id => {
+  getInfo: genre_id => {
     return new Promise((resolve, reject) => {
-      const url = "/api/genre/info/" + toString(id) + "/";
+      const url = "/api/genre/info/" + toString(genre_id) + "/";
       client
         .get(url)
         .then(res =>
           resolve({
-            genre_id: res.data.id,
+            genre_id: res.data.genre_id,
             genre_name: res.data.genre_name
           })
         )

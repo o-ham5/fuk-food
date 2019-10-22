@@ -17,7 +17,7 @@ export default {
     headers: [
       {
         text: "ID",
-        value: "id"
+        value: "area_id"
       },
       { text: "エリア名", value: "area_name" }
     ],
@@ -29,7 +29,6 @@ export default {
   methods: {
     fetchAreaData() {
       Area.getList().then(res => {
-        console.log(res);
         this.areas = res;
       });
     }

@@ -1,19 +1,42 @@
 <template>
   <v-card>
-    <v-form v-model="valid">
-      <v-text-field v-model="username" :rules="userNameRules" label="ユーザー名" required></v-text-field>
-      <v-text-field v-model="email" :rules="emailRules" label="メールアドレス" required></v-text-field>
-      <v-text-field
-        v-model="password"
-        :append-icon="show ? 'visibility' : 'visibility_off'"
-        :type="show ? 'text' : 'password'"
-        :rules="passwordRules"
-        label="パスワード"
-        required
-        @click:append="show = !show"
-      ></v-text-field>
-      <v-btn color="error" :disabled="!valid" class="mr-4" @click="handleClick">SIGN UP</v-btn>
-    </v-form>
+    <v-container>
+      <v-row>
+        <v-col>
+          <v-form v-model="valid">
+            <v-text-field
+              v-model="username"
+              :rules="userNameRules"
+              label="ユーザー名"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="email"
+              :rules="emailRules"
+              label="メールアドレス"
+              required
+            ></v-text-field>
+            <v-text-field
+              v-model="password"
+              :append-icon="show ? 'visibility' : 'visibility_off'"
+              :type="show ? 'text' : 'password'"
+              :rules="passwordRules"
+              label="パスワード"
+              required
+              @click:append="show = !show"
+            ></v-text-field>
+            <p v-if="showError">{{ this.error }}</p>
+            <v-btn
+              color="error"
+              :disabled="!valid"
+              class="mr-4"
+              @click="handleClick"
+              >SIGN UP</v-btn
+            >
+          </v-form>
+        </v-col>
+      </v-row>
+    </v-container>
   </v-card>
 </template>
 
@@ -56,7 +79,8 @@ export default {
           "パスワードは5文字以上20文字以内で入力してください。"
       ],
       progress: false,
-      error: "",
+      showError: false,
+      error: null,
       show: false
     };
   },
@@ -72,7 +96,7 @@ export default {
       }
 
       this.progress = true;
-      this.error = "";
+      this.error = null;
 
       this.$nextTick(() => {
         this.onregister({
@@ -81,7 +105,8 @@ export default {
           password: this.password
         })
           .catch(err => {
-            this.error = err.message;
+            console.log(err);
+            this.error = err;
           })
           .then(() => {
             this.progress = false;

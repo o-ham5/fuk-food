@@ -17,7 +17,7 @@ export default {
     headers: [
       {
         text: "ID",
-        value: "id"
+        value: "genre_id"
       },
       { text: "ジャンル", value: "genre_name" }
     ],
@@ -29,7 +29,6 @@ export default {
   methods: {
     fetchGenreData() {
       Genre.getList().then(res => {
-        console.log(res);
         this.genres = res;
       });
     }
