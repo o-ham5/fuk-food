@@ -48,6 +48,7 @@ export default {
 
   methods: {
     handleClick() {
+      let token = store.state.auth.token;
       let registerInfo = {
         area_name: this.area_name
       };
