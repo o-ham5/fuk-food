@@ -1,4 +1,4 @@
-version: '3.7'
+version: "3.7"
 services:
   lb:
     container_name: lb
@@ -25,7 +25,6 @@ services:
       fuk-net:
         ipv4_address: 172.20.0.11
 
-
   api-web:
     container_name: api-web
     restart: always
@@ -47,13 +46,12 @@ services:
       - api-db
     expose:
       - "8001"
-    command: bash -c "pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate && uwsgi --ini api-app_wsgi.ini"
+    command: bash -c "pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate && python manage.py loaddata initial_data.json && uwsgi --ini api-app_wsgi.ini"
     volumes:
       - "./api-app/:/opt/apps"
     networks:
       fuk-net:
         ipv4_address: 172.20.0.13
-
 
   api-db:
     container_name: api-db
@@ -62,7 +60,7 @@ services:
     ports:
       - "3306:3306"
     volumes:
-      - ./api-db/init:/docker-entrypoint-initdb.d
+      # - ./api-db/init:/docker-entrypoint-initdb.d
       - ./api-db/data:/var/lib/mysql
       - ./api-db/conf/:/etc/mysql/conf.d
     environment:
@@ -74,7 +72,6 @@ services:
     networks:
       fuk-net:
         ipv4_address: 172.20.0.14
-
 
 networks:
   fuk-net:

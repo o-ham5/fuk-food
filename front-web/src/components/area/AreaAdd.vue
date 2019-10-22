@@ -4,9 +4,19 @@
     <!-- sign up dialog -->
     <v-dialog v-model="add" max-width="400">
       <v-card>
-        <v-form v-model="valid">
-          <v-text-field v-model="area_name" label="エリア名" required></v-text-field>
-          <v-btn color="error" :disabled="!valid" class="mr-4" @click="handleClick">追加する</v-btn>
+        <v-form v-model="authorized">
+          <v-text-field
+            v-model="area_name"
+            label="エリア名"
+            required
+          ></v-text-field>
+          <v-btn
+            color="error"
+            :disabled="!authorized"
+            class="mr-4"
+            @click="handleClick"
+            >追加する</v-btn
+          >
         </v-form>
       </v-card>
     </v-dialog>
@@ -42,9 +52,8 @@ export default {
       let registerInfo = {
         area_name: this.area_name
       };
-      return Area.register(registerInfo, token)
-        .then(({ id, area_name }) => {
-          console.log(area_name);
+      return Area.register(registerInfo)
+        .then(({ area_id, area_name }) => {
           this.closeAdd();
         })
         .catch(err => this.throwReject(err));
