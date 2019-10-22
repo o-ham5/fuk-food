@@ -1,29 +1,39 @@
 <template>
-  <v-data-table :headers="headers" :items="spots" :items-per-page="5" class="elevation-1">
+  <v-data-table
+    :headers="headers"
+    :items="spots"
+    :items-per-page="5"
+    class="elevation-1"
+  >
     <template v-slot:top>
       <v-toolbar flat color="white">
         <v-toolbar-title>スポット</v-toolbar-title>
         <v-divider class="mx-4" inset vertical></v-divider>
         <div class="flex-grow-1"></div>
-        <v-btn color="primary" dark class="mb-2" @click="clickRegister()">追加する</v-btn>
+        <v-btn color="primary" dark class="mb-2" @click="clickRegister()"
+          >追加する</v-btn
+        >
         <v-dialog v-model="dialog" max-width="500px">
           <v-card>
             <v-card-title>
-              <span class="headline">test</span>
+              <span class="headline">スポット追加</span>
             </v-card-title>
 
             <v-card-text>
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="spot_name" label="スポット名"></v-text-field>
+                    <v-text-field
+                      v-model="spot_name"
+                      label="スポット名"
+                    ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-select
                       v-model="area_id"
                       :items="areas"
                       item-text="area_name"
-                      item-value="id"
+                      item-value="area_id"
                       label="エリア"
                     ></v-select>
                   </v-col>
@@ -32,15 +42,24 @@
                       v-model="genre_id"
                       :items="genres"
                       item-text="genre_name"
-                      item-value="id"
+                      item-value="genre_id"
                       label="ジャンル"
                     ></v-select>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="latitude" label="緯度"></v-text-field>
+                    <v-text-field
+                      v-model="latitude"
+                      label="緯度"
+                    ></v-text-field>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field v-model="longitude" label="経度"></v-text-field>
+                    <v-text-field
+                      v-model="longitude"
+                      label="経度"
+                    ></v-text-field>
+                  </v-col>
+                  <v-col cols="12" sm="6" md="4">
+                    <v-text-field v-model="link" label="リンク"></v-text-field>
                   </v-col>
                 </v-row>
               </v-container>
@@ -48,7 +67,9 @@
 
             <v-card-actions>
               <div class="flex-grow-1"></div>
-              <v-btn color="blue darken-1" text @click="onCancel()">Cancel</v-btn>
+              <v-btn color="blue darken-1" text @click="onCancel()"
+                >Cancel</v-btn
+              >
               <v-btn color="blue darken-1" text @click="onSave()">Save</v-btn>
             </v-card-actions>
           </v-card>
@@ -125,8 +146,8 @@ export default {
       this.mode = "update";
       this.spot_id = item.spot_id;
       this.spot_name = item.spot_name;
-      this.area_id = item.area.id;
-      this.genre_id = item.genre.id;
+      this.area_id = item.area.area_d;
+      this.genre_id = item.genre.genre_id;
     },
     clickDelete(item) {
       Spot.delete(item.spot_id)

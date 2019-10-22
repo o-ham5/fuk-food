@@ -46,7 +46,7 @@ services:
       - api-db
     expose:
       - "8001"
-    command: bash -c "pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate && python manage.py loaddata initial_data.json && uwsgi --ini api-app_wsgi.ini"
+    command: bash -c "pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate && python manage.py loaddata dump.json && uwsgi --ini api-app_wsgi.ini"
     volumes:
       - "./api-app/:/opt/apps"
     networks:
@@ -72,6 +72,22 @@ services:
     networks:
       fuk-net:
         ipv4_address: 172.20.0.14
+
+  batch:
+    container_name: batch
+    restart: always
+    build: ./batch/
+    depends_on:
+      - api-web
+      - api-db
+    expose:
+      - "8001"
+    command: bash -c "pip install -r requirements.txt &&  python update.py"
+    volumes:
+      - "./batch/:/opt/apps"
+    networks:
+      fuk-net:
+        ipv4_address: 172.20.0.15
 
 networks:
   fuk-net:

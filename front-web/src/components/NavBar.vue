@@ -1,6 +1,13 @@
 <template>
   <nav>
-    <v-app-bar flat fixed app inverted-scroll scroll-threshold=500 color='transparent'>
+    <v-app-bar
+      flat
+      fixed
+      app
+      inverted-scroll
+      scroll-threshold="500"
+      color="transparent"
+    >
       <v-toolbar-title class="text-uppercase grey--text">
         <span class="font-weight-light">FUK</span>
         <span>food</span>
@@ -20,10 +27,12 @@
         @click.stop="signin = true"
         >Sign IN</v-btn
       >
-      <v-btn v-if="authorized" outlined class="mr-3" @click="handleSignOut"
-        >Sign OUT</v-btn
+
+      <span v-if="authorized" style="margin-right:1%"
+        >{{ this.username }}&nbsp;&nbsp;様</span
       >
-      <v-btn v-if="authorized" icon>
+
+      <v-btn v-if="authorized" icon @click.stop="userinfo = true">
         <v-icon>mdi-account</v-icon>
       </v-btn>
 
@@ -34,6 +43,20 @@
       <!-- sign in dialog -->
       <v-dialog v-model="signin" max-width="500">
         <SignInForm :onlogin="handleSignIn" @close="closeSignIn" />
+      </v-dialog>
+      <!-- user infomaton dialog -->
+      <v-dialog v-model="userinfo" max-width="500">
+        <v-card>
+          <v-container>
+            <v-row>
+              <v-col>
+                <v-btn outlined class="mr-3" @click="handleSignOut"
+                  >Sign OUT</v-btn
+                >
+              </v-col>
+            </v-row>
+          </v-container>
+        </v-card>
       </v-dialog>
     </v-app-bar>
   </nav>
@@ -56,7 +79,8 @@ export default {
   data() {
     return {
       signup: false,
-      signin: false
+      signin: false,
+      userinfo: false
     };
   },
   computed: {
@@ -64,6 +88,9 @@ export default {
       return (
         store.state.auth.token !== null && store.state.auth.token !== undefined
       );
+    },
+    username: function() {
+      return store.state.user.username;
     }
   },
 
@@ -80,7 +107,9 @@ export default {
     handleSignOut() {
       return this.$store
         .dispatch("logout")
-        .then(() => {})
+        .then(() => {
+          this.userinfo = false;
+        })
         .catch(err => this.throwReject(err));
     },
     handleSignUp(registerInfo) {

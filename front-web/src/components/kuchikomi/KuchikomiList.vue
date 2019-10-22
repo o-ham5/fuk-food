@@ -32,7 +32,7 @@
                       v-model="situation_id"
                       :items="situations"
                       item-text="situation_name"
-                      item-value="id"
+                      item-value="situation_id"
                       label="シチュエーション"
                     ></v-select>
                   </v-col>

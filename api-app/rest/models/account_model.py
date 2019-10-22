@@ -50,6 +50,7 @@ class Account(AbstractBaseUser):
                               max_length=255, unique=True)
     bias = models.FloatField(default=0)
     variance = models.FloatField(default=0)
+    evals = models.FloatField(default=0)
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_admin = models.BooleanField(default=False)
