@@ -1,10 +1,5 @@
 <template>
-  <v-data-table
-    :headers="headers"
-    :items="situations"
-    :items-per-page="5"
-    class="elevation-1"
-  ></v-data-table>
+  <v-data-table :headers="headers" :items="situations" :items-per-page="5" class="elevation-1"></v-data-table>
 </template>
 
 <script>
@@ -17,7 +12,7 @@ export default {
     headers: [
       {
         text: "ID",
-        value: "id"
+        value: "situation_id"
       },
       { text: "シチュエーション", value: "situation_name" }
     ],
@@ -29,7 +24,6 @@ export default {
   methods: {
     fetchSituationData() {
       Situation.getList().then(res => {
-        console.log(res);
         this.situations = res;
       });
     }

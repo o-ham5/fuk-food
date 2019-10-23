@@ -4,7 +4,7 @@
     <!-- sign up dialog -->
     <v-dialog v-model="add" max-width="400">
       <v-card>
-        <v-form v-model="valid">
+        <v-form v-model="authorized">
           <v-text-field
             v-model="area_name"
             label="エリア名"
@@ -12,7 +12,7 @@
           ></v-text-field>
           <v-btn
             color="error"
-            :disabled="!valid"
+            :disabled="!authorized"
             class="mr-4"
             @click="handleClick"
             >追加する</v-btn
@@ -48,12 +48,12 @@ export default {
 
   methods: {
     handleClick() {
+      let token = store.state.auth.token;
       let registerInfo = {
         area_name: this.area_name
       };
       return Area.register(registerInfo)
-        .then(({ id, area_name }) => {
-          console.log(area_name);
+        .then(({ area_id, area_name }) => {
           this.closeAdd();
         })
         .catch(err => this.throwReject(err));

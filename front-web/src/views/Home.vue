@@ -67,13 +67,6 @@ export default {
   mounted() {
     window.addEventListener('scroll', this.bg_change);
   },
-  computed: {
-    authorized: function() {
-      return (
-        store.state.auth.token !== null && store.state.auth.token !== undefined
-      );
-    }
-  },
   methods: {
     toKuchikomi() {
       if (this.authorized) {
@@ -103,7 +96,7 @@ export default {
 </script>
 
 <style>
-#mainVisual{
-  background: linear-gradient(to top, lightskyblue, #FFF);
+#mainVisual {
+  background: linear-gradient(to top, lightskyblue, #fff);
 }
 </style>

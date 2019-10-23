@@ -20,7 +20,7 @@
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
                     <v-select
-                      v-model="spot_id"
+                      v-model="spot"
                       :items="spots"
                       item-text="spot_name"
                       item-value="spot_id"
@@ -29,10 +29,10 @@
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-select
-                      v-model="situation_id"
+                      v-model="situation"
                       :items="situations"
                       item-text="situation_name"
-                      item-value="id"
+                      item-value="situation_id"
                       label="シチュエーション"
                     ></v-select>
                   </v-col>
@@ -96,10 +96,13 @@ export default {
       { text: "Actions", value: "action", sortable: false }
     ],
     kuchikomis: [],
+    kuchikomi_id: null,
     spots: [],
+    spot: null,
     spot_id: null,
     spot_name: null,
     situations: [],
+    situation: null,
     situation_id: null,
     situation_name: null,
     price: null,
@@ -137,11 +140,16 @@ export default {
       this.mode = "register";
     },
     clickUpdate(item) {
+      console.log(item);
       this.dialog = true;
       this.mode = "update";
-      this.spot_id = item.spot_id;
-      this.spot_name = item.spot_name;
-      this.situation_id = item.situation.id;
+      this.kuchikomi_id = item.kuchikomi_id;
+      this.spot = item.spot;
+      this.spot_id = item.spot.spot_id;
+      this.spot_name = item.spot.spot_name;
+      this.situation = item.situation;
+      this.situation_id = item.situation.situation_id;
+      this.situation_name = item.situation.situation_name;
       this.price = item.price;
       this.score = item.score;
       this.comment = item.comment;
@@ -170,6 +178,7 @@ export default {
           .catch(err => this.throwReject(err));
         this.dialog = false;
       } else if (this.mode === "update") {
+        console.log(saveInfo);
         Kuchikomi.update(this.kuchikomi_id, saveInfo)
           .then(res => {
             this.fetchKuchikomiData().then(res => {

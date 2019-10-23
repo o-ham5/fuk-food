@@ -4,7 +4,7 @@
     <!-- sign up dialog -->
     <v-dialog v-model="add" max-width="400">
       <v-card>
-        <v-form v-model="valid">
+        <v-form v-model="authorized">
           <v-text-field
             v-model="genre_name"
             label="ジャンル名"
@@ -12,7 +12,7 @@
           ></v-text-field>
           <v-btn
             color="error"
-            :disabled="!valid"
+            :disabled="!authorized"
             class="mr-4"
             @click="handleClick"
             >追加する</v-btn
@@ -52,8 +52,7 @@ export default {
         genre_name: this.genre_name
       };
       return Genre.register(registerInfo)
-        .then(({ id, genre_name }) => {
-          console.log(genre_name);
+        .then(({ genre_id, genre_name }) => {
           this.closeAdd();
         })
         .catch(err => this.throwReject(err));
