@@ -1,6 +1,6 @@
 <template>
   <v-container fluid>
-    <v-row id='mainVisual'>
+    <v-row id="mainVisual">
       <MainVisual />
     </v-row>
     <v-row align="center" justify="center">
@@ -35,11 +35,11 @@
         </v-card>
       </v-col>
     </v-row>
-    <v-row id='content1' class=''>
+    <v-row id="content1" class>
       <div style="width: 100%; height: 1000px;">ここからコンテンツ１</div>
     </v-row>
-    <hr>
-    <v-row id='content2'>
+    <hr />
+    <v-row id="content2">
       <div style="width: 100%; height: 1000px;">ここからコンテンツ２</div>
     </v-row>
   </v-container>
@@ -61,11 +61,19 @@ export default {
       content1: null,
       content2: null,
       c1_flag: false,
-      c2_flag: false,
+      c2_flag: false
     };
   },
+  computed: {
+    authorized: function() {
+      return (
+        store.state.auth.token !== null && store.state.auth.token !== undefined
+      );
+    }
+  },
+
   mounted() {
-    window.addEventListener('scroll', this.bg_change);
+    window.addEventListener("scroll", this.bg_change);
   },
   methods: {
     toKuchikomi() {
@@ -76,21 +84,25 @@ export default {
       }
     },
     bg_change() {
+      this.content1 = document.getElementById("content1");
+      this.content2 = document.getElementById("content2");
 
-      this.content1 = document.getElementById('content1');
-      this.content2 = document.getElementById('content2');
-
-      this.c1_flag = window.innerHeight*(3/5) > this.content1.getBoundingClientRect().top;
-      this.c2_flag = window.innerHeight*(3/5) > this.content2.getBoundingClientRect().top;
+      this.c1_flag =
+        window.innerHeight * (3 / 5) >
+        this.content1.getBoundingClientRect().top;
+      this.c2_flag =
+        window.innerHeight * (3 / 5) >
+        this.content2.getBoundingClientRect().top;
 
       if (this.c1_flag && !this.c2_flag) {
-        document.getElementById('main-wrapper').style.backgroundColor = 'black';
-        document.getElementById('main-wrapper').style.color = 'white';
-      }else{
-        document.getElementById('main-wrapper').style.backgroundColor = '#FAFAFA'; 
-        document.getElementById('main-wrapper').style.color = 'black';
-      };
-    },
+        document.getElementById("main-wrapper").style.backgroundColor = "black";
+        document.getElementById("main-wrapper").style.color = "white";
+      } else {
+        document.getElementById("main-wrapper").style.backgroundColor =
+          "#FAFAFA";
+        document.getElementById("main-wrapper").style.color = "black";
+      }
+    }
   }
 };
 </script>
