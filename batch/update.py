@@ -119,7 +119,7 @@ def job():
     for account in accounts:
         account.set_param()
 
-    num_roop = 5000
+    num_roop = 10000
     for _ in tqdm(range(num_roop)):
         for account in accounts:
             account.update_bias()
@@ -132,7 +132,7 @@ def job():
         cursor.execute(sql)
 
     for account in accounts:
-        sql = f"UPDATE accounts SET bias = {account.get_bias()}, bias = {account.get_variance()} WHERE account_id = '{account.get_account_id()}'"
+        sql = f"UPDATE accounts SET bias = {account.get_bias()}, variance = {account.get_variance()} WHERE account_id = '{account.get_account_id()}'"
         cursor.execute(sql)
 
     connection.commit()
@@ -141,7 +141,7 @@ def job():
 
 
 # 毎時間ごとにjobを実行
-schedule.every().hour.do(job)
+schedule.every(10).minutes.do(job)
 
 while True:
     schedule.run_pending()
