@@ -4,9 +4,9 @@
       flat
       fixed
       app
-      inverted-scroll
-      scroll-threshold="500"
-      color="transparent"
+      :inverted-scroll="invertedScroll"
+      :scroll-threshold="scrollThreshold"
+      :color="color"
     >
       <v-toolbar-title class="text-uppercase grey--text">
         <span class="font-weight-light">FUK</span>
@@ -37,7 +37,7 @@
       </v-btn>
 
       <!-- sign up dialog -->
-      <v-dialog v-model="signup" max-width="400">
+      <v-dialog v-model="signup" max-width="700">
         <SignUpForm :onregister="handleSignUp" @close="closeSignUp" />
       </v-dialog>
       <!-- sign in dialog -->
@@ -76,6 +76,23 @@ export default {
     SignUpForm
   },
 
+  props: {
+    invertedScroll: {
+      type: Boolean,
+      default: false
+    },
+    scrollThreshold: {
+      type: Number,
+      required: false,
+      default: 0
+    },
+    color: {
+      type: String,
+      required: false,
+      default: "transparent"
+    }
+  },
+
   data() {
     return {
       signup: false,
@@ -99,8 +116,7 @@ export default {
       return this.$store
         .dispatch("login", authInfo)
         .then(() => {
-          // router.pushで異なるurlに遷移できる。
-          //   this.$router.push({ name: "tracker_list" });
+          this.$router.push({ name: "home" });
         })
         .catch(err => this.throwReject(err));
     },

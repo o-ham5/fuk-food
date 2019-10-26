@@ -141,7 +141,7 @@ def job():
 
 
 # 毎時間ごとにjobを実行
-schedule.every(10).minutes.do(job)
+schedule.every(5).minutes.do(job)
 
 while True:
     schedule.run_pending()

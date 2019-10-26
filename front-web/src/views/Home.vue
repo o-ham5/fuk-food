@@ -1,67 +1,150 @@
 <template>
-  <v-container fluid>
-    <v-row id="mainVisual">
-      <MainVisual />
-    </v-row>
-    <v-row align="center" justify="center">
-      <v-col>
-        <v-card @click="toKuchikomi()">
-          <v-card-text>
+  <div style="background-color: #B3E5FC; height: 100%">
+    <NavBar :inverted-scroll="invertedScroll" :scroll-threshold="scrollThreshold" :color="color" />
+    <v-container>
+      <v-row>
+        <v-col cols="6">
+          <v-card style="height: 100%">
             <v-container>
-              <v-row>口コミを書く</v-row>
+              <v-row style="margin: 3%">
+                <p class="display-2">総合ランキング</p>
+              </v-row>
               <v-row>
-                <p>{{ message }}</p>
+                <v-col cols="4">
+                  <v-img src="@/assets/ranking01.png"></v-img>
+                </v-col>
+                <v-col cols="8">
+                  <div v-if="!loading">
+                    <p>{{ top3[0].spot_name }}</p>
+                    <p>{{ top3[0].evaluated_score.toFixed(2) }}&emsp;ポイント</p>
+                  </div>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="4">
+                  <v-img src="@/assets/ranking02.png"></v-img>
+                </v-col>
+                <v-col cols="8">
+                  <div v-if="!loading">
+                    <p>{{ top3[1].spot_name }}</p>
+                    <p>{{ top3[1].evaluated_score.toFixed(2) }}&emsp;ポイント</p>
+                  </div>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="4">
+                  <v-img src="@/assets/ranking03.png"></v-img>
+                </v-col>
+                <v-col cols="8">
+                  <div v-if="!loading">
+                    <p>{{ top3[2].spot_name }}</p>
+                    <p>{{ top3[2].evaluated_score.toFixed(2) }}&emsp;ポイント</p>
+                  </div>
+                </v-col>
               </v-row>
             </v-container>
-          </v-card-text>
-        </v-card>
-      </v-col>
-      <v-col>
-        <v-card :to="{ name: 'spot' }">
-          <v-card-text>
+          </v-card>
+        </v-col>
+
+        <v-col cols="6">
+          <v-card style="height: 100%">
             <v-container>
-              <v-row>新しくスポットを追加する</v-row>
+              <v-row style="margin: 3%">
+                <p class="display-1">あなたと似た人が好きなお店</p>
+              </v-row>
+              <v-row>
+                <v-col cols="4">
+                  <v-img src="@/assets/ranking01.png"></v-img>
+                </v-col>
+                <v-col cols="8">
+                  <div v-if="!loading">
+                    <p>{{ top3[0].spot_name }}</p>
+                    <p>{{ top3[0].evaluated_score.toFixed(2) }}&emsp;ポイント</p>
+                  </div>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="4">
+                  <v-img src="@/assets/ranking02.png"></v-img>
+                </v-col>
+                <v-col cols="8">
+                  <div v-if="!loading">
+                    <p>{{ top3[1].spot_name }}</p>
+                    <p>{{ top3[1].evaluated_score.toFixed(2) }}&emsp;ポイント</p>
+                  </div>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col cols="4">
+                  <v-img src="@/assets/ranking03.png"></v-img>
+                </v-col>
+                <v-col cols="8">
+                  <div v-if="!loading">
+                    <p>{{ top3[2].spot_name }}</p>
+                    <p>{{ top3[2].evaluated_score.toFixed(2) }}&emsp;ポイント</p>
+                  </div>
+                </v-col>
+              </v-row>
             </v-container>
-          </v-card-text>
-        </v-card>
-      </v-col>
-      <v-col>
-        <v-card :to="{ name: 'meta' }">
-          <v-card-text>
-            <v-container>
-              <v-row>メタ情報を管理する</v-row>
-            </v-container>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-    <v-row id="content1" class>
-      <div style="width: 100%; height: 1000px;">ここからコンテンツ１</div>
-    </v-row>
-    <hr />
-    <v-row id="content2">
-      <div style="width: 100%; height: 1000px;">ここからコンテンツ２</div>
-    </v-row>
-  </v-container>
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row align="center" justify="center">
+        <v-col>
+          <v-card @click="toKuchikomi()">
+            <v-card-text>
+              <v-container>
+                <v-row>口コミを書く</v-row>
+                <v-row>
+                  <p>{{ message }}</p>
+                </v-row>
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </v-col>
+        <v-col>
+          <v-card :to="{ name: 'spot' }">
+            <v-card-text>
+              <v-container>
+                <v-row>新しくスポットを追加する</v-row>
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </v-col>
+        <v-col>
+          <v-card :to="{ name: 'meta' }">
+            <v-card-text>
+              <v-container>
+                <v-row>メタ情報を管理する</v-row>
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script>
+import NavBar from "@/components/NavBar";
+import spot from "@/api/spot";
 import store from "@/store";
-import MainVisual from "@/components/MainVisual";
 
 export default {
   name: "Home",
 
   components: {
-    MainVisual
+    NavBar
   },
   data() {
     return {
-      message: null,
-      content1: null,
-      content2: null,
-      c1_flag: false,
-      c2_flag: false
+      invertedScroll: false,
+      scrollThreshold: 500,
+      color: "#B3E5FC",
+
+      loading: true,
+      spots: null,
+      top3: null
     };
   },
   computed: {
@@ -72,8 +155,8 @@ export default {
     }
   },
 
-  mounted() {
-    window.addEventListener("scroll", this.bg_change);
+  created() {
+    this.fetchTop3();
   },
   methods: {
     toKuchikomi() {
@@ -83,32 +166,20 @@ export default {
         this.message = "サインインしてください！";
       }
     },
-    bg_change() {
-      this.content1 = document.getElementById("content1");
-      this.content2 = document.getElementById("content2");
-
-      this.c1_flag =
-        window.innerHeight * (3 / 5) >
-        this.content1.getBoundingClientRect().top;
-      this.c2_flag =
-        window.innerHeight * (3 / 5) >
-        this.content2.getBoundingClientRect().top;
-
-      if (this.c1_flag && !this.c2_flag) {
-        document.getElementById("main-wrapper").style.backgroundColor = "black";
-        document.getElementById("main-wrapper").style.color = "white";
-      } else {
-        document.getElementById("main-wrapper").style.backgroundColor =
-          "#FAFAFA";
-        document.getElementById("main-wrapper").style.color = "black";
-      }
+    fetchTop3() {
+      spot.getTop3List().then(res => {
+        this.top3 = Object.values(res);
+        this.loading = false;
+      });
+    },
+    fetchSpotList() {
+      spot.getList().then(res => {
+        this.spots = Object.values(res);
+        this.loading = false;
+      });
     }
   }
 };
 </script>
 
-<style>
-#mainVisual {
-  background: linear-gradient(to top, lightskyblue, #fff);
-}
-</style>
+<style></style>
