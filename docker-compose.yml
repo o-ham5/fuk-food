@@ -46,7 +46,7 @@ services:
       - api-db
     expose:
       - "8001"
-    command: bash -c "pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate && python manage.py loaddata dump.json && uwsgi --ini api-app_wsgi.ini"
+    command: bash -c "pip install -r requirements.txt && python manage.py makemigrations && python manage.py migrate && python manage.py loaddata init_data.json && uwsgi --ini api-app_wsgi.ini"
     volumes:
       - "./api-app/:/opt/apps"
     networks:
@@ -82,9 +82,9 @@ services:
       - api-db
     expose:
       - "8001"
-    command: bash -c "pip install -r requirements.txt &&  python update.py"
+    command: sh -c "pip install -r requirements.txt &&  python scheduler.py"
     volumes:
-      - "./batch/:/opt/apps"
+      - "./batch/:/root/apps"
     networks:
       fuk-net:
         ipv4_address: 172.20.0.15

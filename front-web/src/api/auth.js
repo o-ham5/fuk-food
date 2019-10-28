@@ -34,7 +34,30 @@ export default {
           resolve({
             account_id: res.data.account_id,
             username: res.data.username,
-            email: res.data.email
+            email: res.data.email,
+            bias: res.data.bias,
+            variance: res.data.variance,
+            inyou: res.data.inyou,
+            oshare: res.data.oshare,
+            shokuji: res.data.shokuji,
+            setsuyaku: res.data.setsuyaku
+          })
+        )
+        .catch(err => {
+          reject(new Error(err.response.data.message || err.message));
+        });
+    });
+  },
+  update: (token, updateInfo) => {
+    return new Promise((resolve, reject) => {
+      client
+        .patch("/api/account/update/", updateInfo, {
+          headers: { Authorization: "JWT " + token },
+          data: {}
+        })
+        .then(res =>
+          resolve({
+            result: res.data
           })
         )
         .catch(err => {

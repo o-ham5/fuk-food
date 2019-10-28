@@ -13,26 +13,12 @@
         <span>food</span>
       </v-toolbar-title>
       <v-spacer></v-spacer>
-      <v-btn
-        v-if="!authorized"
-        outlined
-        class="mr-3"
-        @click.stop="signup = true"
-        >Sign UP</v-btn
-      >
-      <v-btn
-        v-if="!authorized"
-        outlined
-        class="mr-3"
-        @click.stop="signin = true"
-        >Sign IN</v-btn
-      >
+      <v-btn v-if="!authorized" outlined class="mr-3" @click.stop="signup = true">Sign UP</v-btn>
+      <v-btn v-if="!authorized" outlined class="mr-3" @click.stop="signin = true">Sign IN</v-btn>
 
-      <span v-if="authorized" style="margin-right:1%"
-        >{{ this.username }}&nbsp;&nbsp;様</span
-      >
+      <span v-if="authorized" style="margin-right:1%">{{ this.username }}&nbsp;&nbsp;様</span>
 
-      <v-btn v-if="authorized" icon @click.stop="userinfo = true">
+      <v-btn v-if="authorized" icon @click.stop="accountInfo = true">
         <v-icon>mdi-account</v-icon>
       </v-btn>
 
@@ -45,18 +31,12 @@
         <SignInForm :onlogin="handleSignIn" @close="closeSignIn" />
       </v-dialog>
       <!-- user infomaton dialog -->
-      <v-dialog v-model="userinfo" max-width="500">
-        <v-card>
-          <v-container>
-            <v-row>
-              <v-col>
-                <v-btn outlined class="mr-3" @click="handleSignOut"
-                  >Sign OUT</v-btn
-                >
-              </v-col>
-            </v-row>
-          </v-container>
-        </v-card>
+      <v-dialog v-model="accountInfo" max-width="500">
+        <AccountInfo
+          :on-sign-out-click="handleSignOut"
+          :on-update-click="handleAccountInfoUpdate"
+          @close="closeAccountInfo"
+        />
       </v-dialog>
     </v-app-bar>
   </nav>
@@ -65,6 +45,7 @@
 <script>
 import SignInForm from "@/components/SignInForm";
 import SignUpForm from "@/components/SignUpForm";
+import AccountInfo from "@/components/AccountInfo";
 import { Auth } from "../api";
 import store from "../store";
 
@@ -73,7 +54,8 @@ export default {
 
   components: {
     SignInForm,
-    SignUpForm
+    SignUpForm,
+    AccountInfo
   },
 
   props: {
@@ -97,7 +79,7 @@ export default {
     return {
       signup: false,
       signin: false,
-      userinfo: false
+      accountInfo: false
     };
   },
   computed: {
@@ -120,14 +102,6 @@ export default {
         })
         .catch(err => this.throwReject(err));
     },
-    handleSignOut() {
-      return this.$store
-        .dispatch("logout")
-        .then(() => {
-          this.userinfo = false;
-        })
-        .catch(err => this.throwReject(err));
-    },
     handleSignUp(registerInfo) {
       return Auth.register(registerInfo)
         .then(({ username, email }) => {
@@ -140,6 +114,21 @@ export default {
         })
         .catch(err => this.throwReject(err));
     },
+    handleSignOut() {
+      return this.$store
+        .dispatch("logout")
+        .then(() => {
+          this.$router.push({ name: "top" });
+        })
+        .catch(err => this.throwReject(err));
+    },
+    handleAccountInfoUpdate(token, updateAccountInfo) {
+      return Auth.update(token, updateAccountInfo)
+        .then(({ result }) => {
+          console.log(result);
+        })
+        .catch(err => this.throwReject(err));
+    },
 
     throwReject(err) {
       return Promise.reject(err);
@@ -149,6 +138,9 @@ export default {
     },
     closeSignUp() {
       this.signup = false;
+    },
+    closeAccountInfo() {
+      this.accountInfo = false;
     }
   }
 };

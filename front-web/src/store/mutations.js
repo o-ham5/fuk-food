@@ -11,7 +11,13 @@ export default {
     state.user = {
       account_id: null,
       username: null,
-      email: null
+      email: null,
+      bias: null,
+      variance: null,
+      inyou: null,
+      oshare: null,
+      shokuji: null,
+      setsuyaku: null
     };
   },
   [types.USER_INFO](state, payload) {

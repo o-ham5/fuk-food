@@ -43,22 +43,28 @@ class AuthInfoGetView(generics.RetrieveAPIView):
             'account_id': request.user.account_id,
             'username': request.user.username,
             'email': request.user.email,
+            'bias': request.user.bias,
+            'variance': request.user.variance,
+            'inyou': request.user.inyou,
+            'oshare': request.user.oshare,
+            'shokuji': request.user.shokuji,
+            'setsuyaku': request.user.setsuyaku
         },
             status=status.HTTP_200_OK)
 
 # ユーザ情報更新のView(PUT)
 
 
-class AuthInfoUpdateView(generics.UpdateAPIView):
+class AuthInfoUpdateView(generics.RetrieveUpdateAPIView):
     permission_classes = (permissions.IsAuthenticated,)
     serializer_class = AccountSerializer
-    lookup_field = 'email'
     queryset = Account.objects.all()
 
     def get_object(self):
         try:
             # クエリセットから特定のオブジェクトを抽出する。
-            instance = self.queryset.get(email=self.request.user)
+            instance = self.queryset.get(
+                account_id=self.request.user.account_id)
             return instance
         except Account.DoesNotExist:
             raise Http404

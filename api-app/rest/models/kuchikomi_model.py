@@ -25,6 +25,5 @@ class Kuchikomi(models.Model):
     updated_at = models.DateTimeField(
         db_column='updated_at', default=timezone.now)
 
-
-class Meta:
-    db_table = 'kuchikomis'
+    class Meta:
+        db_table = 'kuchikomis'

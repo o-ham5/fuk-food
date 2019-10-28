@@ -3,7 +3,6 @@ const PrerenderSPAPlugin = require("prerender-spa-plugin");
 
 module.exports = {
   devServer: {
-    publicPath: "./",
     host: "localhost",
     port: 8081,
     disableHostCheck: true

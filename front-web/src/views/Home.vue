@@ -9,35 +9,53 @@
               <v-row style="margin: 3%">
                 <p class="display-2">総合ランキング</p>
               </v-row>
-              <v-row>
+              <v-row style="margin: 3%">
                 <v-col cols="4">
                   <v-img src="@/assets/ranking01.png"></v-img>
                 </v-col>
                 <v-col cols="8">
                   <div v-if="!loading">
-                    <p>{{ top3[0].spot_name }}</p>
+                    <p>
+                      <a :href="top3[0].link" target="_blank">
+                        {{
+                        top3[0].spot_name
+                        }}
+                      </a>
+                    </p>
                     <p>{{ top3[0].evaluated_score.toFixed(2) }}&emsp;ポイント</p>
                   </div>
                 </v-col>
               </v-row>
-              <v-row>
+              <v-row style="margin: 3%">
                 <v-col cols="4">
                   <v-img src="@/assets/ranking02.png"></v-img>
                 </v-col>
                 <v-col cols="8">
                   <div v-if="!loading">
-                    <p>{{ top3[1].spot_name }}</p>
+                    <p>
+                      <a :href="top3[1].link" target="_blank">
+                        {{
+                        top3[1].spot_name
+                        }}
+                      </a>
+                    </p>
                     <p>{{ top3[1].evaluated_score.toFixed(2) }}&emsp;ポイント</p>
                   </div>
                 </v-col>
               </v-row>
-              <v-row>
+              <v-row style="margin: 3%">
                 <v-col cols="4">
                   <v-img src="@/assets/ranking03.png"></v-img>
                 </v-col>
                 <v-col cols="8">
                   <div v-if="!loading">
-                    <p>{{ top3[2].spot_name }}</p>
+                    <p>
+                      <a :href="top3[2].link" target="_blank">
+                        {{
+                        top3[2].spot_name
+                        }}
+                      </a>
+                    </p>
                     <p>{{ top3[2].evaluated_score.toFixed(2) }}&emsp;ポイント</p>
                   </div>
                 </v-col>
@@ -50,39 +68,18 @@
           <v-card style="height: 100%">
             <v-container>
               <v-row style="margin: 3%">
-                <p class="display-1">あなたと似た人が好きなお店</p>
+                <p class="display-1">あなたに似た人が好きなお店</p>
               </v-row>
-              <v-row>
-                <v-col cols="4">
-                  <v-img src="@/assets/ranking01.png"></v-img>
+              <v-row v-for="item in neighborsKuchikomis" style="margin: 3%">
+                <v-col cols="3">
+                  <v-row>
+                    <p>{{ item.account.username }}さん</p>
+                  </v-row>
                 </v-col>
-                <v-col cols="8">
-                  <div v-if="!loading">
-                    <p>{{ top3[0].spot_name }}</p>
-                    <p>{{ top3[0].evaluated_score.toFixed(2) }}&emsp;ポイント</p>
-                  </div>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="4">
-                  <v-img src="@/assets/ranking02.png"></v-img>
-                </v-col>
-                <v-col cols="8">
-                  <div v-if="!loading">
-                    <p>{{ top3[1].spot_name }}</p>
-                    <p>{{ top3[1].evaluated_score.toFixed(2) }}&emsp;ポイント</p>
-                  </div>
-                </v-col>
-              </v-row>
-              <v-row>
-                <v-col cols="4">
-                  <v-img src="@/assets/ranking03.png"></v-img>
-                </v-col>
-                <v-col cols="8">
-                  <div v-if="!loading">
-                    <p>{{ top3[2].spot_name }}</p>
-                    <p>{{ top3[2].evaluated_score.toFixed(2) }}&emsp;ポイント</p>
-                  </div>
+                <v-col cols="9">
+                  <p>{{ item.spot.spot_name }}</p>
+                  <p>{{ item.score }}</p>
+                  <p>{{ item.comment }}</p>
                 </v-col>
               </v-row>
             </v-container>
@@ -128,6 +125,7 @@
 <script>
 import NavBar from "@/components/NavBar";
 import spot from "@/api/spot";
+import kuchikomi from "@/api/kuchikomi";
 import store from "@/store";
 
 export default {
@@ -144,7 +142,11 @@ export default {
 
       loading: true,
       spots: null,
-      top3: null
+      top3: null,
+
+      neighborsKuchikomis: [],
+
+      message: null
     };
   },
   computed: {
@@ -157,6 +159,7 @@ export default {
 
   created() {
     this.fetchTop3();
+    this.fetchNeighborsKuchikomis();
   },
   methods: {
     toKuchikomi() {
@@ -176,6 +179,12 @@ export default {
       spot.getList().then(res => {
         this.spots = Object.values(res);
         this.loading = false;
+      });
+    },
+    fetchNeighborsKuchikomis() {
+      kuchikomi.getNeighborsList(store.state.auth.token).then(res => {
+        console.log(res);
+        this.neighborsKuchikomis = res;
       });
     }
   }
