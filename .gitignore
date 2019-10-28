@@ -9,7 +9,7 @@ pyvenv.cfg
 # api-app
 /api-app/api-app/__pycache__
 /api-app/rest/__pycache__
-/api-app/rest/migrations/__pycache__
+/api-app/rest/migrations
 /api-app/rest/models/__pycache__
 /api-app/rest/serializers/__pycache__
 /api-app/rest/urls/__pycache__
@@ -20,6 +20,11 @@ pyvenv.cfg
 /front-web/.DS_Store
 /front-web/node_modules
 /front-web/dist
+/front-web/public
 
 #api-db
 /api-db/data
+
+
+# batch
+/batch/utils/__pycache__

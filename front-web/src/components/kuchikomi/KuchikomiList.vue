@@ -2,7 +2,7 @@
   <v-data-table
     :headers="headers"
     :items="kuchikomis"
-    :items-per-page="5"
+    :items-per-page="50"
     class="elevation-1"
   >
     <template v-slot:top>
@@ -25,6 +25,7 @@
                       item-text="spot_name"
                       item-value="spot_id"
                       label="スポット"
+                      return-object
                     ></v-select>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
@@ -34,6 +35,7 @@
                       item-text="situation_name"
                       item-value="situation_id"
                       label="シチュエーション"
+                      return-object
                     ></v-select>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
@@ -163,8 +165,8 @@ export default {
     },
     onSave() {
       let saveInfo = {
-        spot_id: this.spot_id,
-        situation_id: this.situation_id,
+        spot_id: this.spot.spot_id,
+        situation_id: this.situation.situation_id,
         account_id: store.state.user.account_id,
         price: this.price,
         score: this.score,
@@ -174,6 +176,7 @@ export default {
         Kuchikomi.register(saveInfo)
           .then(res => {
             this.fetchKuchikomiData();
+            this.clearData();
           })
           .catch(err => this.throwReject(err));
         this.dialog = false;
@@ -193,9 +196,8 @@ export default {
       this.dialog = false;
     },
     clearData() {
-      this.spot_id = null;
-      this.spot_name = null;
-      this.situation_id = null;
+      this.spot = null;
+      this.situation = null;
       this.price = null;
       this.score = null;
       this.comment = null;

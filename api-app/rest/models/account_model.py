@@ -17,6 +17,10 @@ class AccountManager(BaseUserManager):
         user = self.model(
             username=request_data['username'],
             email=self.normalize_email(request_data['email']),
+            inyou=request_data['inyou'],
+            oshare=request_data['oshare'],
+            shokuji=request_data['shokuji'],
+            setsuyaku=request_data['setsuyaku'],
             is_active=True,
             last_login=now,
             date_joined=now,
@@ -48,6 +52,10 @@ class Account(AbstractBaseUser):
     username = models.CharField(_('username'), max_length=30, unique=True)
     email = models.EmailField(verbose_name='email address',
                               max_length=255, unique=True)
+    inyou = models.FloatField(db_column='inyou', default=50)
+    oshare = models.FloatField(db_column='oshare', default=50)
+    shokuji = models.FloatField(db_column='shokuji', default=50)
+    setsuyaku = models.FloatField(db_column='setsuyaku', default=50)
     bias = models.FloatField(default=0)
     variance = models.FloatField(default=0)
     evals = models.FloatField(default=0)

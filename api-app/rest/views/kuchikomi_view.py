@@ -10,8 +10,9 @@ from rest_framework.views import APIView
 
 from ..serializers.kuchikomi_serializer import KuchikomiSerializer
 from ..models.kuchikomi_model import Kuchikomi
+from ..models.neighborhood_model import Neighborhood
 
-# スポット作成のView(POST)
+# 口コミ作成のView(POST)
 
 
 class KuchikomiRegister(generics.CreateAPIView):
@@ -27,7 +28,7 @@ class KuchikomiRegister(generics.CreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# ジャンル情報リスト取得のView(GET)
+# 口コミ情報リスト取得のView(GET)
 
 
 class KuchikomiListGetView(generics.ListCreateAPIView):
@@ -37,7 +38,52 @@ class KuchikomiListGetView(generics.ListCreateAPIView):
     serializer_class = KuchikomiSerializer
 
 
-# スポット情報取得のView(GET)
+# ログインユーザに似ているユーザの口コミ情報リスト取得のView(GET)
+
+class KuchikomiNeighborsListGetView(generics.ListCreateAPIView):
+    permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = KuchikomiSerializer
+
+    def get_queryset(self):
+        neighborhood = Neighborhood.objects.all()
+        neighbors = neighborhood.get(
+            target=self.request.user.account_id)
+        queryset = []
+        try:
+            first = Kuchikomi.objects.filter(
+                account=neighbors.first.account_id).order_by('-score')[0]
+            first.account.account_id = None
+            first.account.bias = None
+            first.account.variance = None
+            first.account.email = None
+            queryset.append(first)
+        except:
+            pass
+        try:
+            second = Kuchikomi.objects.filter(
+                account=neighbors.second.account_id).order_by('-score')[0]
+            second.account.account_id = None
+            second.account.bias = None
+            second.account.variance = None
+            second.account.email = None
+            queryset.append(second)
+        except:
+            pass
+        try:
+            third = Kuchikomi.objects.filter(
+                account=neighbors.third.account_id).order_by('-score')[0]
+            third.account.account_id = None
+            third.account.bias = None
+            third.account.variance = None
+            third.account.email = None
+            queryset.append(third)
+        except:
+            pass
+
+        return queryset
+
+
+# 口コミ情報取得のView(GET)
 
 
 class KuchikomiInfoGetView(generics.RetrieveAPIView):
@@ -48,7 +94,7 @@ class KuchikomiInfoGetView(generics.RetrieveAPIView):
     lookup_field = 'kuchikomi_id'
     lookup_url_kwarg = 'kuchikomi_id'
 
-# スポット情報更新のView(PUT)
+# 口コミ情報更新のView(PUT)
 
 
 class KuchikomiInfoUpdateView(generics.UpdateAPIView):
@@ -66,7 +112,7 @@ class KuchikomiInfoUpdateView(generics.UpdateAPIView):
     #     except Kuchikomi.DoesNotExist:
     #         raise Http404
 
-# スポット削除のView(DELETE)
+# 口コミ削除のView(DELETE)
 
 
 class KuchikomiInfoDeleteView(generics.DestroyAPIView):

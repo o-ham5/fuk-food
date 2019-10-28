@@ -27,7 +27,7 @@ class SpotRegister(generics.CreateAPIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
-# ジャンル情報リスト取得のView(GET)
+# スポット情報リスト取得のView(GET)
 
 
 class SpotListGetView(generics.ListCreateAPIView):
@@ -35,6 +35,19 @@ class SpotListGetView(generics.ListCreateAPIView):
     # permission_classes = (permissions.IsAuthenticated,)
     queryset = Spot.objects.all()
     serializer_class = SpotSerializer
+
+
+# スポットトップ３リスト取得のView(GET)
+
+
+class SpotTop3ListGetView(generics.ListCreateAPIView):
+    permission_classes = (permissions.AllowAny,)
+    # permission_classes = (permissions.IsAuthenticated,)
+    serializer_class = SpotSerializer
+
+    def get_queryset(self):
+        queryset = Spot.objects.all()
+        return queryset.order_by('-evaluated_score')
 
 
 # スポット情報取得のView(GET)

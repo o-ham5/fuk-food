@@ -33,6 +33,20 @@ export default {
         });
     });
   },
+  getNeighborsList: token => {
+    return new Promise((resolve, reject) => {
+      const url = "/api/kuchikomi/neighbors/";
+      client
+        .get(url, {
+          headers: { Authorization: "JWT " + token },
+          data: {}
+        })
+        .then(res => resolve(res.data))
+        .catch(err => {
+          reject(new Error(err.response.data.message || err.message));
+        });
+    });
+  },
   update: (kuchikomi_id, updateInfo) => {
     return new Promise((resolve, reject) => {
       const url = "/api/kuchikomi/update/" + kuchikomi_id + "/";

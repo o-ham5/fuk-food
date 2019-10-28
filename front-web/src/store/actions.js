@@ -9,9 +9,31 @@ export default {
       .then(({ token }) => {
         commit(types.AUTH_LOGIN, { token });
         Auth.getUserInfo(token)
-          .then(({ account_id, username, email }) => {
-            commit(types.USER_INFO, { account_id, username, email });
-          })
+          .then(
+            ({
+              account_id,
+              username,
+              email,
+              bias,
+              variance,
+              inyou,
+              oshare,
+              shokuji,
+              setsuyaku
+            }) => {
+              commit(types.USER_INFO, {
+                account_id,
+                username,
+                email,
+                bias,
+                variance,
+                inyou,
+                oshare,
+                shokuji,
+                setsuyaku
+              });
+            }
+          )
           .catch(err => {
             throw err;
           });

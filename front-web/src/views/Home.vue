@@ -1,68 +1,152 @@
 <template>
-  <v-container fluid>
-    <v-row id="mainVisual">
-      <MainVisual />
-    </v-row>
-    <v-row align="center" justify="center">
-      <v-col>
-        <v-card @click="toKuchikomi()">
-          <v-card-text>
+  <div style="background-color: #B3E5FC; height: 100%">
+    <NavBar :inverted-scroll="invertedScroll" :scroll-threshold="scrollThreshold" :color="color" />
+    <v-container>
+      <v-row>
+        <v-col cols="6">
+          <v-card style="height: 100%">
             <v-container>
-              <v-row>口コミを書く</v-row>
-              <v-row>
-                <p>{{ message }}</p>
+              <v-row style="margin: 3%">
+                <p class="display-2">総合ランキング</p>
+              </v-row>
+              <v-row style="margin: 3%">
+                <v-col cols="4">
+                  <v-img src="@/assets/ranking01.png"></v-img>
+                </v-col>
+                <v-col cols="8">
+                  <div v-if="!loading">
+                    <p>
+                      <a :href="top3[0].link" target="_blank">
+                        {{
+                        top3[0].spot_name
+                        }}
+                      </a>
+                    </p>
+                    <p>{{ top3[0].evaluated_score.toFixed(2) }}&emsp;ポイント</p>
+                  </div>
+                </v-col>
+              </v-row>
+              <v-row style="margin: 3%">
+                <v-col cols="4">
+                  <v-img src="@/assets/ranking02.png"></v-img>
+                </v-col>
+                <v-col cols="8">
+                  <div v-if="!loading">
+                    <p>
+                      <a :href="top3[1].link" target="_blank">
+                        {{
+                        top3[1].spot_name
+                        }}
+                      </a>
+                    </p>
+                    <p>{{ top3[1].evaluated_score.toFixed(2) }}&emsp;ポイント</p>
+                  </div>
+                </v-col>
+              </v-row>
+              <v-row style="margin: 3%">
+                <v-col cols="4">
+                  <v-img src="@/assets/ranking03.png"></v-img>
+                </v-col>
+                <v-col cols="8">
+                  <div v-if="!loading">
+                    <p>
+                      <a :href="top3[2].link" target="_blank">
+                        {{
+                        top3[2].spot_name
+                        }}
+                      </a>
+                    </p>
+                    <p>{{ top3[2].evaluated_score.toFixed(2) }}&emsp;ポイント</p>
+                  </div>
+                </v-col>
               </v-row>
             </v-container>
-          </v-card-text>
-        </v-card>
-      </v-col>
-      <v-col>
-        <v-card :to="{ name: 'spot' }">
-          <v-card-text>
+          </v-card>
+        </v-col>
+
+        <v-col cols="6">
+          <v-card style="height: 100%">
             <v-container>
-              <v-row>新しくスポットを追加する</v-row>
+              <v-row style="margin: 3%">
+                <p class="display-1">あなたに似た人が好きなお店</p>
+              </v-row>
+              <v-row v-for="item in neighborsKuchikomis" style="margin: 3%">
+                <v-col cols="3">
+                  <v-row>
+                    <p>{{ item.account.username }}さん</p>
+                  </v-row>
+                </v-col>
+                <v-col cols="9">
+                  <p>{{ item.spot.spot_name }}</p>
+                  <p>{{ item.score }}</p>
+                  <p>{{ item.comment }}</p>
+                </v-col>
+              </v-row>
             </v-container>
-          </v-card-text>
-        </v-card>
-      </v-col>
-      <v-col>
-        <v-card :to="{ name: 'meta' }">
-          <v-card-text>
-            <v-container>
-              <v-row>メタ情報を管理する</v-row>
-            </v-container>
-          </v-card-text>
-        </v-card>
-      </v-col>
-    </v-row>
-    <v-row id="content1" class='my-12'>
-      <div style="width: 100%;">
-        <p>ここからコンテンツ１</p>
-        <img id="ramen_mask" src="../assets/ramen_path.svg" width="80%">
-        <h3 id="c1_text1" class="c1_text">あいうえお。</h3>
-        <p id="c1_text2" class="c1_text">テキストテキストテキストテキストテキストテキスト</p>
-      </div>
-    </v-row>
-    <hr />
-    <v-row id="content2">
-      <div style="width: 100%; height: 1000px;">ここからコンテンツ２</div>
-    </v-row>
-  </v-container>
+          </v-card>
+        </v-col>
+      </v-row>
+      <v-row align="center" justify="center">
+        <v-col>
+          <v-card @click="toKuchikomi()">
+            <v-card-text>
+              <v-container>
+                <v-row>口コミを書く</v-row>
+                <v-row>
+                  <p>{{ message }}</p>
+                </v-row>
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </v-col>
+        <v-col>
+          <v-card :to="{ name: 'spot' }">
+            <v-card-text>
+              <v-container>
+                <v-row>新しくスポットを追加する</v-row>
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </v-col>
+        <v-col>
+          <v-card :to="{ name: 'meta' }">
+            <v-card-text>
+              <v-container>
+                <v-row>メタ情報を管理する</v-row>
+              </v-container>
+            </v-card-text>
+          </v-card>
+        </v-col>
+      </v-row>
+    </v-container>
+  </div>
 </template>
 
 <script>
+import NavBar from "@/components/NavBar";
+import spot from "@/api/spot";
+import kuchikomi from "@/api/kuchikomi";
 import store from "@/store";
-import MainVisual from "@/components/MainVisual";
 
 export default {
   name: "Home",
 
   components: {
-    MainVisual
+    NavBar
   },
   data() {
     return {
-      message: null,
+      invertedScroll: false,
+      scrollThreshold: 500,
+      color: "#B3E5FC",
+
+      loading: true,
+      spots: null,
+      top3: null,
+
+      neighborsKuchikomis: [],
+
+      message: null
     };
   },
   computed: {
@@ -73,8 +157,9 @@ export default {
     }
   },
 
-  mounted() {
-    window.addEventListener("scroll", this.bg_change);
+  created() {
+    this.fetchTop3();
+    this.fetchNeighborsKuchikomis();
   },
   methods: {
     toKuchikomi() {
@@ -84,74 +169,26 @@ export default {
         this.message = "サインインしてください！";
       }
     },
-    bg_change() {
-      var content1 = document.getElementById("content1");
-      var content2 = document.getElementById("content2");
-
-      var c1_els = document.getElementsByClassName("c1_text");
-
-      var c1_flag =
-        window.innerHeight * (2 / 5) >
-        content1.getBoundingClientRect().top;
-      var c2_flag =
-        window.innerHeight * (3 / 5) >
-        content2.getBoundingClientRect().top;
-
-      if (c1_flag && !c2_flag) {
-        document.getElementById("main-wrapper").style.backgroundColor = "black";
-        document.getElementById("main-wrapper").style.color = "#FAFAFA";
-        for(var i=0;i<c1_els.length;i++){
-          c1_els[i].style.color = "black";
-        };
-      } else {
-        document.getElementById("main-wrapper").style.backgroundColor =
-          "#FAFAFA";
-        document.getElementById("main-wrapper").style.color = "black";
-        for(var i=0;i<c1_els.length;i++){
-          c1_els[i].style.color = "#FAFAFA";
-        };
-      }
+    fetchTop3() {
+      spot.getTop3List().then(res => {
+        this.top3 = Object.values(res);
+        this.loading = false;
+      });
+    },
+    fetchSpotList() {
+      spot.getList().then(res => {
+        this.spots = Object.values(res);
+        this.loading = false;
+      });
+    },
+    fetchNeighborsKuchikomis() {
+      kuchikomi.getNeighborsList(store.state.auth.token).then(res => {
+        console.log(res);
+        this.neighborsKuchikomis = res;
+      });
     }
   }
 };
 </script>
 
-<style>
-#mainVisual {
-  background: linear-gradient(to top, lightskyblue, #fff);
-}
-
-#content1{
-  position: relative;
-}
-
-#content1:before{
-  content: "";
-  display: block;
-  padding-top: 100%;
-}
-
-#ramen_mask{
-  position: absolute;
-  width: 80%;
-  left: 10%;
-}
-
-#c1_text1{
-  position: absolute;
-  left: 33%;
-  top: 40%;
-  color: #FAFAFA;
-  font-size: 5vw;
-  transition: color 1s 0.5s;
-}
-
-#c1_text2{
-  position: absolute;
-  left: 23%;
-  top: 55%;
-  color: black;
-  font-size: 2vw;
-  transition: color 1s 1s;
-}
-</style>
+<style></style>

@@ -3,7 +3,6 @@ import numpy as np
 from numpy import mean, isnan
 import pandas as pd
 from random import randint
-from tqdm import tqdm
 
 import schedule
 import time
@@ -73,7 +72,10 @@ class Account:
         return f'account {self.account_id} bias {self.bias} var {self.variance} num evals {len(self.evals)}'
 
 
-def job():
+def job_scoring():
+    start = time.time()
+    print("####### job_scoring start!! ########")
+
     # データベースへの接続とカーソルの生成
     connection = MySQLdb.connect(
         host='172.20.0.14',
@@ -83,7 +85,7 @@ def job():
     cursor = connection.cursor()
 
     # 口コミデータを全て取得する
-    sql = "SELECT spot, account, score FROM rest_kuchikomi"
+    sql = "SELECT spot, account, score FROM kuchikomis"
     cursor.execute(sql)
     kuchikomis = []
     for row in cursor:
@@ -120,7 +122,7 @@ def job():
         account.set_param()
 
     num_roop = 10000
-    for _ in tqdm(range(num_roop)):
+    for _ in range(num_roop):
         for account in accounts:
             account.update_bias()
             account.update_variance()
@@ -139,10 +141,6 @@ def job():
     cursor.close()
     connection.close()
 
-
-# 毎時間ごとにjobを実行
-schedule.every(10).minutes.do(job)
-
-while True:
-    schedule.run_pending()
-    time.sleep(1)
+    elapsed_time = time.time() - start
+    print("####### job_scoring finished!! ########")
+    print("time elapsed:{0}".format(elapsed_time) + "[sec]")

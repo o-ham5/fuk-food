@@ -55,6 +55,17 @@ export default {
         });
     });
   },
+  getTop3List: () => {
+    return new Promise((resolve, reject) => {
+      const url = "/api/spot/top3-list/";
+      client
+        .get(url)
+        .then(res => resolve(res.data))
+        .catch(err => {
+          reject(new Error(err.response.data.message || err.message));
+        });
+    });
+  },
   update: (spot_id, updateInfo) => {
     return new Promise((resolve, reject) => {
       const url = "/api/spot/update/" + spot_id + "/";

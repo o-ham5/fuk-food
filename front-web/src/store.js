@@ -14,7 +14,13 @@ const state = {
   user: {
     account_id: null,
     username: null,
-    email: null
+    email: null,
+    bias: null,
+    variance: null,
+    inyou: null,
+    oshare: null,
+    shokuji: null,
+    setsuyaku: null
   }
 };
 export default new Vuex.Store({

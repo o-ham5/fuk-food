@@ -1,5 +1,6 @@
 import Vue from "vue";
 import Router from "vue-router";
+import Top from "@/views/Top.vue";
 import Home from "@/views/Home.vue";
 import MetaView from "@/views/MetaView.vue";
 import SpotView from "@/views/SpotView.vue";
@@ -28,6 +29,12 @@ const router = new Router({
   routes: [
     {
       path: "/",
+      name: "top",
+      component: Top,
+      meta: { requiresAuth: false }
+    },
+    {
+      path: "/home",
       name: "home",
       component: Home,
       meta: { requiresAuth: false }

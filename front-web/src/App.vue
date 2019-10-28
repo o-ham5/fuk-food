@@ -1,6 +1,5 @@
 <template>
-  <v-app id="main-wrapper">
-    <NavBar />
+  <v-app class="grey lighten-4">
     <v-content>
       <router-view></router-view>
     </v-content>
@@ -33,8 +32,7 @@ export default {
 </script>
 
 <style>
-#main-wrapper{
+#main-wrapper {
   transition: 1s;
 }
-
 </style>
