@@ -1,5 +1,5 @@
 <template>
-  <v-app class="grey lighten-4">
+  <v-app id="all-wrapper" class="grey lighten-4">
     <v-content>
       <router-view></router-view>
     </v-content>
@@ -32,7 +32,9 @@ export default {
 </script>
 
 <style>
-#main-wrapper {
-  transition: 1s;
+@import url('https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c&display=swap');
+
+#all-wrapper{
+  font-family: 'M PLUS Rounded 1c', sans-serif;
 }
 </style>
