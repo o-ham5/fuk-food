@@ -5,7 +5,8 @@
       :scroll-threshold="scrollThreshold"
       :color="color"
     />
-    <v-container fluid>
+    <PreScreen v-if="!display" @set="Setflag"></PreScreen>
+    <v-container v-if="display" fluid>
       <v-row id="mainVisual">
         <MainVisual />
       </v-row>
@@ -85,6 +86,7 @@
       </v-row>
       <v-row id="content3">
         <h3 class="content-title">About us</h3>
+        <div style="width:100%;"></div>
         <p>
           あいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえお
         </p>
@@ -104,13 +106,15 @@
 import NavBar from "@/components/NavBar";
 import store from "@/store";
 import MainVisual from "@/components/MainVisual";
+import PreScreen from "@/components/PreScreen";
 
 export default {
   name: "Home",
 
   components: {
     NavBar,
-    MainVisual
+    MainVisual,
+    PreScreen
   },
   data() {
     return {
@@ -118,7 +122,8 @@ export default {
 
       invertedScroll: true,
       scrollThreshold: 500,
-      color: "transparent"
+      color: "transparent",
+      display: false,
     };
   },
   computed: {
@@ -162,6 +167,9 @@ export default {
           c1_els[i].classList.remove("show");
         }
       }
+    },
+    Setflag(){
+      this.display = true;
     }
   }
 };
