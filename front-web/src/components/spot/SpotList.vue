@@ -23,10 +23,14 @@
               <v-container>
                 <v-row>
                   <v-col cols="12" sm="6" md="4">
-                    <v-text-field
-                      v-model="spot_name"
+                    <!-- <v-text-field v-model="spot_name" label="スポット名"></v-text-field> -->
+                    <v-autocomplete
                       label="スポット名"
-                    ></v-text-field>
+                      :items="spots"
+                      item-text="spot_name"
+                      :filter="activeFilter"
+                      filled
+                    ></v-autocomplete>
                   </v-col>
                   <v-col cols="12" sm="6" md="4">
                     <v-select
@@ -108,8 +112,19 @@ export default {
     area_id: null,
     latitude: null,
     longitude: null,
-    link: null
+    link: null,
+    filters: [
+      {
+        fn: (item, queryText) => item.spot_name.indexOf(queryText) > -1,
+        text: "Exact Match"
+      }
+    ]
   }),
+  computed: {
+    activeFilter() {
+      return this.filters[0].fn;
+    }
+  },
   created() {
     this.fetchSpotData();
     this.fetchGenreData();
@@ -118,19 +133,16 @@ export default {
   methods: {
     fetchSpotData() {
       Spot.getList().then(res => {
-        console.log(res);
         this.spots = res;
       });
     },
     fetchGenreData() {
       Genre.getList().then(res => {
-        console.log(res);
         this.genres = res;
       });
     },
     fetchAreaData() {
       Area.getList().then(res => {
-        console.log(res);
         this.areas = res;
       });
     },
