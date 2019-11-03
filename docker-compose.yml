@@ -84,7 +84,7 @@ services:
       - "8001"
     command: sh -c "pip install -r requirements.txt &&  python scheduler.py"
     volumes:
-      - "./batch/:/root/apps"
+      - "./batch/:/opt/apps"
     networks:
       fuk-net:
         ipv4_address: 172.20.0.15

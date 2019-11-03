@@ -47,6 +47,21 @@ export default {
         });
     });
   },
+  getMedianList: (token, targetPersonality) => {
+    return new Promise((resolve, reject) => {
+      const url = "/api/kuchikomi/median/";
+      client
+        .get(url, {
+          params: targetPersonality,
+          headers: { Authorization: "JWT " + token },
+          data: {}
+        })
+        .then(res => resolve(res.data))
+        .catch(err => {
+          reject(new Error(err.response.data.message || err.message));
+        });
+    });
+  },
   update: (kuchikomi_id, updateInfo) => {
     return new Promise((resolve, reject) => {
       const url = "/api/kuchikomi/update/" + kuchikomi_id + "/";

@@ -1,7 +1,8 @@
 import MySQLdb
 import numpy as np
 from datetime import datetime
-import faiss
+from annoy import AnnoyIndex
+from sklearn.preprocessing import StandardScaler
 import time
 
 
@@ -29,13 +30,26 @@ def job_knn():
         accounts.append(row)
     data = np.array(accounts)[:, 2:]
     data = data.astype(np.float32)
+    # 標準化
+    scaler = StandardScaler()
+    scaler.fit(data)
+    data = scaler.transform(data)
 
     query = data
     # KNNの実行
-    index = faiss.IndexFlatL2(data.shape[1])   # build the index
-    index.add(data)                  # add vectors to the index
-    dists, result = index.search(query, k=4)     # actual search
-    print(result)
+    t = AnnoyIndex(data.shape[1], "euclidean")
+    for i, v in enumerate(data):
+        t.add_item(i, v)
+
+    t.build(10)  # 10 trees
+    result = []
+    dists = []
+    for i, v in enumerate(query):
+        r, d = t.get_nns_by_vector(v, 4, include_distances=True)
+        result.append(r)
+        dists.append(d)
+    print(np.array(result))
+    print(np.array(dists))
 
     # 結果をバルクで挿入する
     sql = "INSERT INTO neighborhoods (target, first, second, third, created_at, updated_at) VALUES (%s, %s, %s, %s, %s, %s)"
@@ -52,3 +66,6 @@ def job_knn():
     elapsed_time = time.time() - start
     print("####### job_knn finished!! ########")
     print("time elapsed:{0}".format(elapsed_time) + "[sec]")
+
+
+# job_knn()

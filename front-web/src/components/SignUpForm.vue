@@ -1,6 +1,11 @@
 <template>
   <v-card>
-    <v-carousel v-model="model" :show-arrows="false" :hide-delimiters="false" :cycle="false">
+    <v-carousel
+      v-model="model"
+      :show-arrows="false"
+      :hide-delimiters="false"
+      :cycle="false"
+    >
       <v-carousel-item v-for="(page, i) in pages" :key="page">
         <!-- ようこそのページ -->
         <v-card v-if="model == 0" style="height:100%">
@@ -9,11 +14,16 @@
               <v-row>
                 <p>{{ page }}</p>
                 <v-spacer></v-spacer>
-                <v-btn color="error" class="mr-4" @click="changePage0to1">次へ</v-btn>
+                <v-btn color="error" class="mr-4" @click="changePage0to1"
+                  >次へ</v-btn
+                >
               </v-row>
               <v-row>
                 <v-col cols="5">
-                  <v-img src="@/assets/mimi_sumasu_man.png" style="margin-top: 10%" />
+                  <v-img
+                    src="@/assets/mimi_sumasu_man.png"
+                    style="margin-top: 10%"
+                  />
                 </v-col>
                 <v-col cols="7">
                   <div style="margin-top:20%">
@@ -33,16 +43,35 @@
               <v-row>
                 {{ page }}
                 <v-spacer></v-spacer>
-                <v-btn color="error" :disabled="!valid" class="mr-4" @click="changePage1to2">次へ</v-btn>
+                <v-btn
+                  color="error"
+                  :disabled="!valid"
+                  class="mr-4"
+                  @click="changePage1to2"
+                  >次へ</v-btn
+                >
               </v-row>
               <v-row>
                 <v-col cols="4">
-                  <v-img src="@/assets/mimi_sumasu_man.png" style="margin-top: 20%" />
+                  <v-img
+                    src="@/assets/mimi_sumasu_man.png"
+                    style="margin-top: 20%"
+                  />
                 </v-col>
                 <v-col cols="8">
                   <v-form v-model="valid">
-                    <v-text-field v-model="username" :rules="userNameRules" label="ユーザー名" required></v-text-field>
-                    <v-text-field v-model="email" :rules="emailRules" label="メールアドレス" required></v-text-field>
+                    <v-text-field
+                      v-model="username"
+                      :rules="userNameRules"
+                      label="ユーザー名"
+                      required
+                    ></v-text-field>
+                    <v-text-field
+                      v-model="email"
+                      :rules="emailRules"
+                      label="メールアドレス"
+                      required
+                    ></v-text-field>
                     <v-text-field
                       v-model="password"
                       :append-icon="show ? 'visibility' : 'visibility_off'"
@@ -67,18 +96,23 @@
               <v-row>
                 <p>{{ page }}</p>
                 <v-spacer></v-spacer>
-                <v-btn color="error" class="mr-4" @click="changePage2to3">次へ</v-btn>
+                <v-btn color="error" class="mr-4" @click="changePage2to3"
+                  >次へ</v-btn
+                >
               </v-row>
 
               <v-row>
                 <v-col cols="4">
-                  <v-img src="@/assets/mimi_sumasu_man.png" style="margin-top: 10%" />
+                  <v-img
+                    src="@/assets/mimi_sumasu_man.png"
+                    style="margin-top: 10%"
+                  />
                 </v-col>
                 <v-col cols="8">
                   <div style="margin-top:0%">
                     <v-container>
                       <v-row>
-                        <p>陽？陰？</p>
+                        <p>陽キャ度は？</p>
                       </v-row>
                       <v-row>
                         <v-slider
@@ -87,10 +121,11 @@
                           :min="min"
                           append-icon="mdi-weather-sunny"
                           prepend-icon="mdi-weather-night"
+                          thumb-label="true"
                         ></v-slider>
                       </v-row>
                       <v-row>
-                        <p>オシャレ？ダサい？</p>
+                        <p>オシャレ度は？</p>
                       </v-row>
                       <v-row>
                         <v-slider
@@ -99,6 +134,7 @@
                           :min="min"
                           append-icon="mdi-emoticon-cool-outline"
                           prepend-icon="mdi-emoticon-poop"
+                          thumb-label="true"
                         ></v-slider>
                       </v-row>
                       <v-row>
@@ -111,6 +147,7 @@
                           :min="min"
                           append-icon="mdi-fire"
                           prepend-icon="mdi-snowflake"
+                          thumb-label="true"
                         ></v-slider>
                       </v-row>
                       <v-row>
@@ -123,6 +160,7 @@
                           :min="min"
                           append-icon="mdi-fire"
                           prepend-icon="mdi-snowflake"
+                          thumb-label="true"
                         ></v-slider>
                       </v-row>
                     </v-container>
@@ -140,13 +178,22 @@
               <v-row>{{ page }}</v-row>
               <v-row>
                 <v-col cols="5">
-                  <v-img src="@/assets/mimi_sumasu_man.png" style="margin-top: 10%" />
+                  <v-img
+                    src="@/assets/mimi_sumasu_man.png"
+                    style="margin-top: 10%"
+                  />
                 </v-col>
                 <v-col cols="7">
                   <div style="margin-top:20%">
                     <p>入力したメールアドレスに仮登録のメールを送ります。</p>
                     <p>メールのリンクをクリックして登録を完了してください。</p>
-                    <v-btn color="error" :disabled="!valid" class="mr-4" @click="handleClick">メールを送る</v-btn>
+                    <v-btn
+                      color="error"
+                      :disabled="!valid"
+                      class="mr-4"
+                      @click="handleClick"
+                      >メールを送る</v-btn
+                    >
                   </div>
                 </v-col>
               </v-row>
