@@ -147,6 +147,8 @@ export default {
       var content2 = document.getElementById("content2");
       var top_wrapper = document.getElementById("top-wrapper");
 
+      var nav_btns = document.querySelectorAll('#nav-wrapper .v-btn');
+
       var c1_els = document.getElementsByClassName("c1-part");
       var c1_flag =
         window.innerHeight * (2 / 5) > content1.getBoundingClientRect().top;
@@ -158,14 +160,22 @@ export default {
         top_wrapper.style.color = "#FAFAFA";
         for (let i = 0; i < c1_els.length; i++) {
           c1_els[i].classList.add("show");
-        }
+        };
+        for (let i = 0; i < nav_btns.length; i++) {
+          nav_btns[i].classList.remove("black--text");
+          nav_btns[i].classList.add("white--text");
+        };
       } else {
         top_wrapper.style.backgroundColor =
           "#FAFAFA";
         top_wrapper.style.color = "black";
         for (let i = 0; i < c1_els.length; i++) {
           c1_els[i].classList.remove("show");
-        }
+        };
+        for (let i = 0; i < nav_btns.length; i++) {
+          nav_btns[i].classList.remove("white--text");
+          nav_btns[i].classList.add("black--text");
+        };
       }
     },
     Setflag(){
