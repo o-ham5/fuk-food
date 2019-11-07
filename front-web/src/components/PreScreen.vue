@@ -218,9 +218,13 @@ export default {
         mojs.addShape("equal2", Equal2);
         mojs.addShape("question", Question);
 
+        var ps_width = document.getElementById("pre-screen").getBoundingClientRect().width;
+
+        var el_scale = ps_width * 3 / 400;
+
         const OPTS = {
             parent: '#pre-screen',
-            scale: 9,
+            scale: el_scale,
             fill: 'none',
             top: "80%",
             stroke: '#003233',
@@ -235,7 +239,7 @@ export default {
         const fukfood = new mojs.Shape({
             parent: '#pre-screen',
             shape: 'fukfood',
-            scale: 9,
+            scale: el_scale,
             fill: 'white',
             top: "80%",
             duration: 1000,
@@ -402,7 +406,7 @@ export default {
 }
 #pre-screen {
   position: relative;
-  width: 1200px;
+  width: 100%;
 }
 #pre-screen:before {
   content: "";
