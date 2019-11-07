@@ -5,6 +5,7 @@
       :scroll-threshold="scrollThreshold"
       :color="color"
     />
+    <Contents />
     <PreScreen v-if="!display" @set="Setflag"></PreScreen>
     <v-container v-if="display" fluid class="mb-12">
       <BottomBar v-if="bottomBarFlag" />
@@ -108,6 +109,7 @@ import BottomBar from "@/components/BottomBar";
 import store from "@/store";
 import MainVisual from "@/components/MainVisual";
 import PreScreen from "@/components/PreScreen";
+import Contents from "@/components/Contents";
 
 export default {
   name: "Home",
@@ -117,6 +119,7 @@ export default {
     BottomBar,
     MainVisual,
     PreScreen,
+    Contents,
   },
   data() {
     return {
