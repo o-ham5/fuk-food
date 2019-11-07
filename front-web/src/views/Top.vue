@@ -44,18 +44,18 @@
         </div>
         <div class="content2-item">
           <v-container fluid>
-            <v-row class="reverse">
-              <v-col cols=2 md=1>
-              </v-col>  
-              <v-col cols=10 md=5>
-                <img src="../assets/blue.png" width=100%>
-              </v-col>
-              <v-col cols=12 md=6>
+            <v-row>
+              <v-col cols=12 md=6 order-md="3">
                 <h4>自分の好みに似たユーザーのオススメ店をpick up！</h4>
                 <p class="mt-12">
                   独自の分析法であなたの好みや性格と似ているユーザーを調査し，その人がよく行くお店を紹介します。<br>
                   登録ユーザー同士で美味しいお店を共有しちゃいましょう！
                 </p>
+              </v-col>
+              <v-col cols=2 md=1 order-md="1">
+              </v-col>
+              <v-col cols=10 md=5 order-md="2">
+                <img src="../assets/blue.png" width=100%>
               </v-col>
             </v-row>
           </v-container>
