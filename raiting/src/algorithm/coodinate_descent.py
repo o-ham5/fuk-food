@@ -2,7 +2,7 @@ from numpy import mean
 from tqdm import tqdm
 
 def coodinate_descent(users, rests):
-    N_ROOP = 10
+    N_ROOP = 100
     for roop in tqdm(range(N_ROOP)):
         for user in users:
             # update bias

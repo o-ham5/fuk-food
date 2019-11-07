@@ -17,10 +17,10 @@ def main(esti_user_data_path, esti_rest_data_path):
     eval_errors = stat_rest(real_rest_data, esti_rest_data)
 
     print('[ user ]')
-    print('mean bias error', mean(bias_errors))
-    print('mean vari error', mean(variance_errors))
+    print('mean bias square error', mean(bias_errors))
+    print('mean vari square error', mean(variance_errors))
     print('[ rest ]')
-    print('mean eval error', mean(eval_errors))
+    print('mean eval square error', mean(eval_errors))
 
 def read_user_data(file_path):
     user_data = dict()
@@ -44,8 +44,8 @@ def read_rest_data(file_path):
     return rest_data
 
 def stat_user(real_user_data, esti_user_data):
-    bias_errors = []
-    variance_errors = []
+    bias_sq_errors = []
+    variance_sq_errors = []
     for user_ix in esti_user_data:
         if user_ix not in real_user_data:
             continue
@@ -53,23 +53,23 @@ def stat_user(real_user_data, esti_user_data):
         real_user = real_user_data[user_ix]
         bias_error = esti_user['bias'] - real_user['bias']
         vari_error = esti_user['variance'] - real_user['variance']
-        bias_errors.append(bias_error)
-        variance_errors.append(vari_error)
+        bias_sq_errors.append(bias_error**2)
+        variance_sq_errors.append(vari_error**2)
 
-    return bias_errors, variance_errors
+    return bias_sq_errors, variance_sq_errors
 
 
 def stat_rest(real_rest_data, esti_rest_data):
-    eval_errors = []
+    eval_sq_errors = []
     for rest_ix in esti_rest_data:
         if rest_ix not in real_rest_data:
             continue
         esti_rest = esti_rest_data[rest_ix]
         real_rest = real_rest_data[rest_ix]
         eval_error = esti_rest['true_eval'] - real_rest['true_eval']
-        eval_errors.append(eval_error)
+        eval_sq_errors.append(eval_error**2)
 
-    return eval_errors
+    return eval_sq_errors
 
 if __name__ == '__main__':
     if len(argv) != 3:

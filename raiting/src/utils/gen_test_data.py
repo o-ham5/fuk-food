@@ -12,7 +12,7 @@ n_eval = 0.2 * n_user * n_rest
 users = {
     user_ix: {
         'bias': 4*rand()-2,  # (-2, 2)
-        'variance': 1*rand()  # (0, 1)
+        'variance': 2*rand()  # (0, 2)
     }
     for user_ix in range(n_user)
 }
