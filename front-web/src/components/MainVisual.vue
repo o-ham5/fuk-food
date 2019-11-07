@@ -96,10 +96,13 @@ export default {
       easing: "sin.inout",
       delay: 1500
     });
+
+    var _this = this;
+
     const timeline = new mojs.Timeline({
       delay: 500,
       onComplete() {
-        // this.replay();
+        _this.$emit('bottom-bar');
       }
     });
     timeline.add(

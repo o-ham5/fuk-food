@@ -6,11 +6,11 @@
       :color="color"
     />
     <PreScreen v-if="!display" @set="Setflag"></PreScreen>
-    <v-container v-if="display" fluid>
+    <v-container v-if="display" fluid class="mb-12">
+      <BottomBar v-if="bottomBarFlag" />
       <v-row id="mainVisual">
-        <MainVisual />
+        <MainVisual @bottom-bar="SetBottom" />
       </v-row>
-      <v-btn outlined class="mr-3" :to="{ name: 'home' }">はじめる</v-btn>
       <v-row id="content1" class="my-12">
         <div style="width: 100%;">
           <img id="ramen_mask" src="../assets/ramen_path.svg" width="80%" />
@@ -104,6 +104,7 @@
 
 <script>
 import NavBar from "@/components/NavBar";
+import BottomBar from "@/components/BottomBar";
 import store from "@/store";
 import MainVisual from "@/components/MainVisual";
 import PreScreen from "@/components/PreScreen";
@@ -113,8 +114,9 @@ export default {
 
   components: {
     NavBar,
+    BottomBar,
     MainVisual,
-    PreScreen
+    PreScreen,
   },
   data() {
     return {
@@ -124,6 +126,7 @@ export default {
       scrollThreshold: 500,
       color: "transparent",
       display: false,
+      bottomBarFlag: false,
     };
   },
   computed: {
@@ -180,7 +183,10 @@ export default {
     },
     Setflag(){
       this.display = true;
-    }
+    },
+    SetBottom(){
+      this.bottomBarFlag = true;
+    },
   }
 };
 </script>
@@ -189,6 +195,8 @@ export default {
 #top-wrapper {
   transition: 1s;
 }
+
+
 
 #mainVisual {
   background: linear-gradient(to top, lightskyblue, #fff);
