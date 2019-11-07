@@ -1,5 +1,5 @@
 <template>
-  <nav>
+  <nav id="nav-wrapper">
     <v-app-bar
       flat
       fixed
