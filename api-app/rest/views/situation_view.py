@@ -15,8 +15,7 @@ from ..models.situation_model import Situation
 
 
 class SituationRegister(generics.CreateAPIView):
-    permission_classes = (permissions.AllowAny,)
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = Situation.objects.all()
     serializer_class = SituationSerializer
 
@@ -33,7 +32,6 @@ class SituationRegister(generics.CreateAPIView):
 
 class SituationListGetView(generics.ListCreateAPIView):
     permission_classes = (permissions.AllowAny,)
-    # permission_classes = (permissions.IsAuthenticated,)
     queryset = Situation.objects.all()
     serializer_class = SituationSerializer
 
@@ -42,8 +40,7 @@ class SituationListGetView(generics.ListCreateAPIView):
 
 
 class SituationInfoGetView(generics.RetrieveAPIView):
-    permission_classes = (permissions.AllowAny,)
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = Situation.objects.all()
     serializer_class = SituationSerializer
     lookup_field = 'id'

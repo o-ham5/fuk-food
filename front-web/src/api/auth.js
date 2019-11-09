@@ -23,6 +23,26 @@ export default {
         });
     });
   },
+  checkUserName: usernameInfo => {
+    return new Promise((resolve, reject) => {
+      client
+        .post("/api/account/check-username/", usernameInfo)
+        .then(res => resolve({ res: res.data }))
+        .catch(err => {
+          reject(new Error(err.response.data.message || err.message));
+        });
+    });
+  },
+  checkEmail: emailInfo => {
+    return new Promise((resolve, reject) => {
+      client
+        .post("/api/account/check-email/", emailInfo)
+        .then(res => resolve({ res: res.data }))
+        .catch(err => {
+          reject(new Error(err.response.data.message || err.message));
+        });
+    });
+  },
   getUserInfo: token => {
     return new Promise((resolve, reject) => {
       client

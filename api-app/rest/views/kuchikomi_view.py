@@ -21,7 +21,7 @@ from sklearn.preprocessing import StandardScaler
 
 
 class KuchikomiRegister(generics.CreateAPIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = Kuchikomi.objects.all()
     serializer_class = KuchikomiSerializer
 
@@ -196,7 +196,7 @@ class KuchikomiInfoGetView(generics.RetrieveAPIView):
 
 
 class KuchikomiInfoUpdateView(generics.UpdateAPIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
     # permission_classes = (permissions.IsAuthenticated,)
     serializer_class = KuchikomiSerializer
     queryset = Kuchikomi.objects.all()
@@ -214,7 +214,7 @@ class KuchikomiInfoUpdateView(generics.UpdateAPIView):
 
 
 class KuchikomiInfoDeleteView(generics.DestroyAPIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
     # permission_classes = (permissions.IsAuthenticated,)
     serializer_class = KuchikomiSerializer
     queryset = Kuchikomi.objects.all()

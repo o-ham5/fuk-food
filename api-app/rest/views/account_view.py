@@ -84,3 +84,37 @@ class AuthInfoDeleteView(generics.DestroyAPIView):
             return instance
         except Account.DoesNotExist:
             raise Http404
+
+
+class CheckExistingUserName(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        try:
+            usernames = [account.username for account in Account.objects.all()]
+            res = {'exist': None}
+            if request.data['username'] in usernames:
+                res['exist'] = True
+            else:
+                res['exist'] = False
+            return Response(res)
+        except:
+            res = {'error': 'error'}
+            return Response(res)
+
+
+class CheckExistingEmail(APIView):
+    permission_classes = (permissions.AllowAny,)
+
+    def post(self, request, format=None):
+        try:
+            emails = [account.email for account in Account.objects.all()]
+            res = {'exist': None}
+            if request.data['email'] in emails:
+                res['exist'] = True
+            else:
+                res['exist'] = False
+            return Response(res)
+        except:
+            res = {'error': 'error'}
+            return Response(res)

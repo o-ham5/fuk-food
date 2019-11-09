@@ -1,4 +1,4 @@
-from .account_view import AuthRegister, AuthInfoGetView, AuthInfoUpdateView, AuthInfoDeleteView
+from .account_view import AuthRegister, AuthInfoGetView, AuthInfoUpdateView, AuthInfoDeleteView, CheckExistingUserName, CheckExistingUserName
 from .area_view import AreaRegister, AreaInfoGetView, AreaListGetView, AreaInfoUpdateView, AreaInfoDeleteView
 from .spot_view import SpotRegister, SpotInfoGetView, SpotListGetView, SpotInfoUpdateView, SpotInfoDeleteView
 from .genre_view import GenreRegister, GenreInfoGetView, GenreListGetView, GenreInfoUpdateView, GenreInfoDeleteView

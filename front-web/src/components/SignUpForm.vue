@@ -45,7 +45,9 @@
                 <v-spacer></v-spacer>
                 <v-btn
                   color="error"
-                  :disabled="!valid"
+                  :disabled="
+                    !valid || showEmailExistError || showUsernameExistError
+                  "
                   class="mr-4"
                   @click="changePage1to2"
                   >次へ</v-btn
@@ -65,13 +67,55 @@
                       :rules="userNameRules"
                       label="ユーザー名"
                       required
-                    ></v-text-field>
+                      @change="checkUserName"
+                    >
+                      <template v-slot:append>
+                        <v-fade-transition leave-absolute>
+                          <v-progress-circular
+                            v-if="checkingUsername"
+                            size="24"
+                            color="info"
+                            indeterminate
+                          ></v-progress-circular>
+                          <v-icon v-if="usernameOk" color="#00E676"
+                            >mdi-check-circle</v-icon
+                          >
+                        </v-fade-transition>
+                      </template>
+                    </v-text-field>
+                    <p
+                      v-if="showUsernameExistError"
+                      style="font-size: 50%; color: #EF5350"
+                    >
+                      {{ usernameExistError }}
+                    </p>
                     <v-text-field
                       v-model="email"
                       :rules="emailRules"
                       label="メールアドレス"
                       required
-                    ></v-text-field>
+                      @change="checkEmail"
+                    >
+                      <template v-slot:append>
+                        <v-fade-transition leave-absolute>
+                          <v-progress-circular
+                            v-if="checkingEmail"
+                            size="24"
+                            color="info"
+                            indeterminate
+                          ></v-progress-circular>
+                          <v-icon v-if="emailOk" color="#00E676"
+                            >mdi-check-circle</v-icon
+                          >
+                        </v-fade-transition>
+                      </template>
+                    </v-text-field>
+                    <p
+                      v-if="showEmailExistError"
+                      style="font-size: 50%; color: #EF5350"
+                    >
+                      {{ emailExistError }}
+                    </p>
                     <v-text-field
                       v-model="password"
                       :append-icon="show ? 'visibility' : 'visibility_off'"
@@ -81,7 +125,15 @@
                       required
                       @click:append="show = !show"
                     ></v-text-field>
-                    <p v-if="showError">{{ this.error }}</p>
+                    <v-text-field
+                      v-model="password_re"
+                      :append-icon="show ? 'visibility' : 'visibility_off'"
+                      :type="show ? 'text' : 'password'"
+                      :rules="passwordReRules"
+                      label="パスワード（確認）"
+                      required
+                      @click:append="show = !show"
+                    ></v-text-field>
                   </v-form>
                 </v-col>
               </v-row>
@@ -121,7 +173,6 @@
                           :min="min"
                           append-icon="mdi-weather-sunny"
                           prepend-icon="mdi-weather-night"
-                          thumb-label="true"
                         ></v-slider>
                       </v-row>
                       <v-row>
@@ -134,7 +185,6 @@
                           :min="min"
                           append-icon="mdi-emoticon-cool-outline"
                           prepend-icon="mdi-emoticon-poop"
-                          thumb-label="true"
                         ></v-slider>
                       </v-row>
                       <v-row>
@@ -147,7 +197,6 @@
                           :min="min"
                           append-icon="mdi-fire"
                           prepend-icon="mdi-snowflake"
-                          thumb-label="true"
                         ></v-slider>
                       </v-row>
                       <v-row>
@@ -160,7 +209,6 @@
                           :min="min"
                           append-icon="mdi-fire"
                           prepend-icon="mdi-snowflake"
-                          thumb-label="true"
                         ></v-slider>
                       </v-row>
                     </v-container>
@@ -206,7 +254,7 @@
 </template>
 
 <script>
-const REGEX_EMAIL = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+import auth from "../api/auth";
 const required = val => !!val.trim();
 
 export default {
@@ -232,13 +280,23 @@ export default {
       ],
       valid: false,
       username: "",
-      userNameRules: [v => !!v || "ユーザー名を入力してください。"],
+      checkingUsername: false,
+      usernameOk: false,
+      userNameRules: [
+        v => !!v || "ユーザー名を入力してください。",
+        v =>
+          /^[a-zA-Z0-9_\-.]{3,15}$/.test(v) ||
+          "ユーザ名は３文字以上15文字以内の英数字で入力してください。"
+      ],
       email: "",
+      checkingEmail: false,
+      emailOk: false,
       emailRules: [
         v => !!v || "メールアドレスを入力してください。",
         v =>
-          /.+@.+\..+/.test(v) ||
-          "メールアドレスを正しい形式で入力してください。"
+          /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9-]+(?:\.[a-zA-Z0-9-]+)*$/.test(
+            v
+          ) || "メールアドレスを正しい形式で入力してください。"
       ],
       password: "",
       passwordRules: [
@@ -247,8 +305,17 @@ export default {
           (v && v.length >= 5) ||
           "パスワードは5文字以上20文字以内で入力してください。",
         v =>
-          (v && v.length <= 20) ||
-          "パスワードは5文字以上20文字以内で入力してください。"
+          (v && v.length <= 30) ||
+          "パスワードは5文字以上30文字以内で入力してください。",
+        v =>
+          (v &&
+            /^(?=.*?[a-z])(?=.*?[A-Z])(?=.*?\d)[a-zA-Z\d]{8,100}$/.test(v)) ||
+          "パスワードには半角小文字大文字数字をそれぞれ１種類以上含めてください。"
+      ],
+      password_re: "",
+      passwordReRules: [
+        v => !!v || "パスワードを入力してください。",
+        v => this.password == v || "パスワードが一致しません"
       ],
       progress: false,
       showError: false,
@@ -260,7 +327,12 @@ export default {
       shokuji: 50,
       setsuyaku: 50,
       min: 0,
-      max: 100
+      max: 100,
+
+      usernameExistError: null,
+      showUsernameExistError: false,
+      emailExistError: null,
+      showEmailExistError: false
     };
   },
 
@@ -292,7 +364,7 @@ export default {
           setsuyaku: this.setsuyaku
         })
           .catch(err => {
-            this.error = err;
+            this.error = "入力されたユーザ情報で登録できませんでした。";
           })
           .then(() => {
             this.progress = false;
@@ -316,6 +388,50 @@ export default {
     },
     changePage2to3() {
       this.model = 3;
+    },
+    checkUserName() {
+      this.checkingUsername = true;
+      if (this.username != null) {
+        return auth
+          .checkUserName({
+            username: this.username
+          })
+          .then(({ res }) => {
+            this.checkingUsername = false;
+            if (!res.exist) {
+              this.showUsernameExistError = false;
+              this.usernameOk = true;
+            } else {
+              this.usernameOk = false;
+              this.usernameExistError =
+                "入力されたユーザー名はすでに登録されています。";
+              this.showUsernameExistError = true;
+            }
+          })
+          .catch(err => this.throwReject(err));
+      }
+    },
+    checkEmail() {
+      this.checkingEmail = true;
+      if (this.email != null) {
+        return auth
+          .checkEmail({
+            email: this.email
+          })
+          .then(({ res }) => {
+            this.checkingEmail = false;
+            if (!res.exist) {
+              this.emailOk = true;
+              this.showEmailExistError = false;
+            } else {
+              this.emailOk = false;
+              this.emailExistError =
+                "入力されたメールアドレスはすでに登録されています。";
+              this.showEmailExistError = true;
+            }
+          })
+          .catch(err => this.throwReject(err));
+      }
     }
   }
 };
