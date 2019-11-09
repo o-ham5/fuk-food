@@ -15,7 +15,7 @@ from ..models.spot_model import Spot
 
 
 class SpotRegister(generics.CreateAPIView):
-    permission_classes = (permissions.AllowAny,)
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = Spot.objects.all()
     serializer_class = SpotSerializer
 
@@ -32,7 +32,6 @@ class SpotRegister(generics.CreateAPIView):
 
 class SpotListGetView(generics.ListCreateAPIView):
     permission_classes = (permissions.AllowAny,)
-    # permission_classes = (permissions.IsAuthenticated,)
     queryset = Spot.objects.all()
     serializer_class = SpotSerializer
 
@@ -42,7 +41,6 @@ class SpotListGetView(generics.ListCreateAPIView):
 
 class SpotTop3ListGetView(generics.ListCreateAPIView):
     permission_classes = (permissions.AllowAny,)
-    # permission_classes = (permissions.IsAuthenticated,)
     serializer_class = SpotSerializer
 
     def get_queryset(self):
@@ -55,7 +53,6 @@ class SpotTop3ListGetView(generics.ListCreateAPIView):
 
 class SpotInfoGetView(generics.RetrieveAPIView):
     permission_classes = (permissions.AllowAny,)
-    # permission_classes = (permissions.IsAuthenticated,)
     queryset = Spot.objects.all()
     serializer_class = SpotSerializer
     lookup_field = 'spot_id'
@@ -65,8 +62,7 @@ class SpotInfoGetView(generics.RetrieveAPIView):
 
 
 class SpotInfoUpdateView(generics.UpdateAPIView):
-    permission_classes = (permissions.AllowAny,)
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = SpotSerializer
     queryset = Spot.objects.all()
     lookup_field = 'spot_id'
@@ -83,8 +79,7 @@ class SpotInfoUpdateView(generics.UpdateAPIView):
 
 
 class SpotInfoDeleteView(generics.DestroyAPIView):
-    permission_classes = (permissions.AllowAny,)
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
     serializer_class = SpotSerializer
     queryset = Spot.objects.all()
     lookup_field = 'spot_id'

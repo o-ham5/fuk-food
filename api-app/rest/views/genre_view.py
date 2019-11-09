@@ -15,8 +15,7 @@ from ..models.genre_model import Genre
 
 
 class GenreRegister(generics.CreateAPIView):
-    permission_classes = (permissions.AllowAny,)
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
 
@@ -33,7 +32,6 @@ class GenreRegister(generics.CreateAPIView):
 
 class GenreListGetView(generics.ListCreateAPIView):
     permission_classes = (permissions.AllowAny,)
-    # permission_classes = (permissions.IsAuthenticated,)
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
 
@@ -42,8 +40,7 @@ class GenreListGetView(generics.ListCreateAPIView):
 
 
 class GenreInfoGetView(generics.RetrieveAPIView):
-    permission_classes = (permissions.AllowAny,)
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = Genre.objects.all()
     serializer_class = GenreSerializer
     lookup_field = 'id'

@@ -22,7 +22,6 @@ class IsAdmin(BasePermission):
 
 
 class AreaRegister(generics.CreateAPIView):
-    # permission_classes = (permissions.AllowAny)
     permission_classes = (permissions.IsAuthenticated, IsAdmin)
     queryset = Area.objects.all()
     serializer_class = AreaSerializer
@@ -40,7 +39,6 @@ class AreaRegister(generics.CreateAPIView):
 
 class AreaListGetView(generics.ListCreateAPIView):
     permission_classes = (permissions.AllowAny,)
-    # permission_classes = (permissions.IsAuthenticated,)
     queryset = Area.objects.all()
     serializer_class = AreaSerializer
 
@@ -49,8 +47,7 @@ class AreaListGetView(generics.ListCreateAPIView):
 
 
 class AreaInfoGetView(generics.RetrieveAPIView):
-    permission_classes = (permissions.AllowAny,)
-    # permission_classes = (permissions.IsAuthenticated,)
+    permission_classes = (permissions.IsAuthenticated,)
     queryset = Area.objects.all()
     serializer_class = AreaSerializer
     lookup_field = 'id'
