@@ -12,59 +12,55 @@
           <v-card style="height: 100%">
             <v-container>
               <v-row style="margin: 3%">
-                <p class="display-2">総合ランキング</p>
+                <p class="display-1">総合ランキング</p>
+                <v-select
+                  v-model="top3SelectedGenre"
+                  :items="genres"
+                  item-text="genre_name"
+                  item-value="genre_id"
+                  label="ジャンルで絞り込む"
+                ></v-select>
+                <v-select
+                  v-model="top3SelectedArea"
+                  :items="areas"
+                  item-text="area_name"
+                  item-value="area_id"
+                  label="エリアで絞り込む"
+                ></v-select>
               </v-row>
               <v-row style="margin: 3%">
-                <v-col cols="4">
-                  <v-img src="@/assets/ranking01.png"></v-img>
-                </v-col>
-                <v-col cols="8">
-                  <div v-if="!loading">
+                <v-btn small @click="searchTop3">検索する</v-btn>
+                <v-btn small style="margin-left: 5%" @click="clearTop3"
+                  >条件をクリアする</v-btn
+                >
+              </v-row>
+              <div v-if="top3SearchProgressing">
+                <v-progress-circular
+                  indeterminate
+                  color="primary"
+                ></v-progress-circular>
+              </div>
+              <div v-if="top3NotFountdMsg">{{ top3NotFountdMsg }}</div>
+              <div v-if="top3">
+                <v-row
+                  v-for="(item, idx) in top3.slice(0, 3)"
+                  style="margin: 3%"
+                >
+                  <v-col cols="4">
+                    <v-img v-if="idx == 0" src="@/assets/ranking01.png"></v-img>
+                    <v-img v-if="idx == 1" src="@/assets/ranking02.png"></v-img>
+                    <v-img v-if="idx == 2" src="@/assets/ranking03.png"></v-img>
+                  </v-col>
+                  <v-col cols="8">
                     <p>
-                      <a :href="top3[0].link" target="_blank">
-                        {{ top3[0].spot_name }}
+                      <a :href="item.link" target="_blank">
+                        {{ item.spot_name }}
                       </a>
                     </p>
-                    <p>
-                      {{ top3[0].evaluated_score.toFixed(2) }}&emsp;ポイント
-                    </p>
-                  </div>
-                </v-col>
-              </v-row>
-              <v-row style="margin: 3%">
-                <v-col cols="4">
-                  <v-img src="@/assets/ranking02.png"></v-img>
-                </v-col>
-                <v-col cols="8">
-                  <div v-if="!loading">
-                    <p>
-                      <a :href="top3[1].link" target="_blank">
-                        {{ top3[1].spot_name }}
-                      </a>
-                    </p>
-                    <p>
-                      {{ top3[1].evaluated_score.toFixed(2) }}&emsp;ポイント
-                    </p>
-                  </div>
-                </v-col>
-              </v-row>
-              <v-row style="margin: 3%">
-                <v-col cols="4">
-                  <v-img src="@/assets/ranking03.png"></v-img>
-                </v-col>
-                <v-col cols="8">
-                  <div v-if="!loading">
-                    <p>
-                      <a :href="top3[2].link" target="_blank">
-                        {{ top3[2].spot_name }}
-                      </a>
-                    </p>
-                    <p>
-                      {{ top3[2].evaluated_score.toFixed(2) }}&emsp;ポイント
-                    </p>
-                  </div>
-                </v-col>
-              </v-row>
+                    <p>{{ item.evaluated_score.toFixed(2) }}&emsp;ポイント</p>
+                  </v-col>
+                </v-row>
+              </div>
             </v-container>
           </v-card>
         </v-col>
@@ -114,7 +110,6 @@
                             :min="min"
                             append-icon="mdi-weather-sunny"
                             prepend-icon="mdi-weather-night"
-                            thumb-label="true"
                           ></v-slider>
                         </v-row>
                         <v-row>
@@ -127,7 +122,6 @@
                             :min="min"
                             append-icon="mdi-emoticon-cool-outline"
                             prepend-icon="mdi-emoticon-poop"
-                            thumb-label="true"
                           ></v-slider>
                         </v-row>
                         <v-row>
@@ -140,7 +134,6 @@
                             :min="min"
                             append-icon="mdi-fire"
                             prepend-icon="mdi-snowflake"
-                            thumb-label="true"
                           ></v-slider>
                         </v-row>
                         <v-row>
@@ -153,19 +146,13 @@
                             :min="min"
                             append-icon="mdi-fire"
                             prepend-icon="mdi-snowflake"
-                            thumb-label="true"
                           ></v-slider>
                         </v-row>
                         <v-row>
                           <p>相手と自分、どっちを重視する？</p>
                         </v-row>
                         <v-row>
-                          <v-slider
-                            v-model="weight"
-                            :max="max"
-                            :min="min"
-                            thumb-label="true"
-                          >
+                          <v-slider v-model="weight" :max="max" :min="min">
                             <template v-slot:prepend>
                               <p>自分</p>
                             </template>
@@ -264,6 +251,8 @@
 <script>
 import NavBar from "@/components/NavBar";
 import spot from "@/api/spot";
+import genre from "@/api/genre";
+import area from "@/api/area";
 import kuchikomi from "@/api/kuchikomi";
 import store from "@/store";
 
@@ -279,12 +268,18 @@ export default {
       scrollThreshold: 500,
       color: "#B3E5FC",
 
-      loading: true,
       spots: null,
       top3: null,
+      rankImage: [
+        "@/assets/ranking01.png",
+        "@/assets/ranking02.png",
+        "@/assets/ranking03.png"
+      ],
 
       neighborsKuchikomis: [],
       virtualNeighborsKuchikomis: [],
+      genres: [],
+      areas: [],
 
       inyou: 50,
       oshare: 50,
@@ -296,6 +291,11 @@ export default {
 
       searchProgressing: false,
       showResult: false,
+
+      top3SelectedGenre: null,
+      top3SelectedArea: null,
+      top3NotFountdMsg: null,
+      top3SearchProgressing: false,
 
       message: null
     };
@@ -311,6 +311,8 @@ export default {
   created() {
     this.fetchTop3();
     this.fetchNeighborsKuchikomis();
+    this.fetchGenreList();
+    this.fetchAreaList();
   },
   methods: {
     toKuchikomi() {
@@ -323,13 +325,21 @@ export default {
     fetchTop3() {
       spot.getTop3List().then(res => {
         this.top3 = Object.values(res);
-        this.loading = false;
       });
     },
     fetchSpotList() {
       spot.getList().then(res => {
         this.spots = Object.values(res);
-        this.loading = false;
+      });
+    },
+    fetchGenreList() {
+      genre.getList().then(res => {
+        this.genres = Object.values(res);
+      });
+    },
+    fetchAreaList() {
+      area.getList().then(res => {
+        this.areas = Object.values(res);
       });
     },
     fetchNeighborsKuchikomis() {
@@ -353,6 +363,34 @@ export default {
           this.showResult = true;
         });
       this.searchProgressing = true;
+    },
+    searchTop3() {
+      this.top3SearchProgressing = true;
+      let query = {
+        area_id: this.top3SelectedArea,
+        genre_id: this.top3SelectedGenre
+      };
+      spot.getTop3List(query).then(res => {
+        if (res.length) {
+          this.top3NotFountdMsg = null;
+          this.top3 = Object.values(res);
+          this.top3SearchProgressing = false;
+        } else {
+          this.top3 = [];
+          this.top3NotFountdMsg = "お探しのお店は見つかりませんでした。";
+          this.top3SearchProgressing = false;
+        }
+      });
+    },
+    clearTop3() {
+      this.top3SearchProgressing = true;
+      this.top3NotFountdMsg = null;
+      this.top3SelectedGenre = null;
+      this.top3SelectedArea = null;
+      spot.getTop3List().then(res => {
+        this.top3 = Object.values(res);
+        this.top3SearchProgressing = false;
+      });
     }
   }
 };

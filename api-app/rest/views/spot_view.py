@@ -45,7 +45,24 @@ class SpotTop3ListGetView(generics.ListCreateAPIView):
 
     def get_queryset(self):
         queryset = Spot.objects.all()
-        return queryset.order_by('-evaluated_score')
+        print(bool(self.request.query_params))
+        if bool(self.request.query_params):
+            keys = self.request.query_params.keys()
+            if ('area_id' in keys and 'genre_id' in keys):
+                return queryset.filter(
+                    area=self.request.query_params['area_id'],
+                    genre=self.request.query_params['genre_id']
+                ).order_by('-evaluated_score')
+            elif ('area_id' in keys and 'genre_id' not in keys):
+                return queryset.filter(
+                    area=self.request.query_params['area_id'],
+                ).order_by('-evaluated_score')
+            elif ('area_id' not in keys and 'genre_id' in keys):
+                return queryset.filter(
+                    genre=self.request.query_params['genre_id']
+                ).order_by('-evaluated_score')
+        else:
+            return queryset.order_by('-evaluated_score')
 
 
 # スポット情報取得のView(GET)

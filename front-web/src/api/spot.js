@@ -55,11 +55,14 @@ export default {
         });
     });
   },
-  getTop3List: () => {
+  getTop3List: query => {
     return new Promise((resolve, reject) => {
       const url = "/api/spot/top3-list/";
       client
-        .get(url)
+        .get(url, {
+          params: query,
+          data: {}
+        })
         .then(res => resolve(res.data))
         .catch(err => {
           reject(new Error(err.response.data.message || err.message));
