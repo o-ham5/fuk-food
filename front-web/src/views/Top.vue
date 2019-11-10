@@ -5,14 +5,13 @@
       :scroll-threshold="scrollThreshold"
       :color="color"
     />
-    <Contents />
     <PreScreen v-if="!display" @set="Setflag"></PreScreen>
     <v-container v-if="display" fluid class="mb-12">
       <BottomBar v-if="bottomBarFlag" />
       <v-row id="mainVisual">
         <MainVisual @bottom-bar="SetBottom" />
       </v-row>
-      <v-row id="content1" class="my-12">
+      <v-row id="ramenVisual" class="my-8">
         <div style="width: 100%;">
           <img id="ramen_mask" src="../assets/ramen_path.svg" width="80%" />
           <img id="kou" class="c1-part c1-part1" src="../assets/kou.png" width="7%" />
@@ -23,9 +22,11 @@
           </p>
         </div>
       </v-row>
-      <v-row id="content2">
-        <h3 class="content-title">Contents</h3>
-        <div class="content2-item">
+      <v-row id="contents" class="my-12">
+        <div class='text-title'>
+          <TextContents v-if="contentsFlag" />
+        </div>
+        <div class="contents-item">
           <v-container fluid>
             <v-row>
               <v-col cols=12 md=6>
@@ -43,7 +44,7 @@
             </v-row>
           </v-container>
         </div>
-        <div class="content2-item">
+        <div class="contents-item">
           <v-container fluid>
             <v-row>
               <v-col cols=12 md=6 order-md="3">
@@ -61,7 +62,7 @@
             </v-row>
           </v-container>
         </div>
-        <div class="content2-item">
+        <div class="contents-item">
           <v-container fluid>
             <v-row>
               <v-col cols=12 md=6>
@@ -85,20 +86,25 @@
           </v-container>
         </div>
       </v-row>
-      <v-row id="content3">
-        <h3 class="content-title">About us</h3>
+      <v-row id="about-us" class="my-12">
+        <div class='text-title'>
+          <TextAboutUs v-if="aboutusFlag" />
+        </div>
         <div style="width:100%;"></div>
         <p>
           あいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえお
         </p>
       </v-row>
-      <v-row id="content4">
-        <h3 class="content-title">Next release</h3>
+      <v-row id="next-release" class="my-12">
+        <div class='text-title'>
+          <TextNextRelease v-if="nextreleaseFlag" />
+        </div>
         <div style="width:100%;"></div>
         <p>
           行動範囲や予算から，１日の行動プランをご紹介！？ デートプランも！？
         </p>
       </v-row>
+      <div style="width:100%;height:1000px;"></div>
     </v-container>
   </div>
 </template>
@@ -109,7 +115,9 @@ import BottomBar from "@/components/BottomBar";
 import store from "@/store";
 import MainVisual from "@/components/MainVisual";
 import PreScreen from "@/components/PreScreen";
-import Contents from "@/components/Contents";
+import TextContents from "@/components/TextContents";
+import TextAboutUs from "@/components/TextAboutUs";
+import TextNextRelease from "@/components/TextNextRelease";
 
 export default {
   name: "Home",
@@ -119,7 +127,9 @@ export default {
     BottomBar,
     MainVisual,
     PreScreen,
-    Contents,
+    TextContents,
+    TextAboutUs,
+    TextNextRelease,
   },
   data() {
     return {
@@ -130,6 +140,10 @@ export default {
       color: "transparent",
       display: false,
       bottomBarFlag: false,
+      // textDivHeight: 0,
+      contentsFlag: false,
+      aboutusFlag: false,
+      nextreleaseFlag: false,
     };
   },
   computed: {
@@ -149,19 +163,21 @@ export default {
 
   methods: {
     bg_change() {
-      var content1 = document.getElementById("content1");
-      var content2 = document.getElementById("content2");
+      var ramenVisual = document.getElementById("ramenVisual");
+      var contents = document.getElementById("contents");
+      var aboutUs = document.getElementById("about-us");
+      var nextRelease = document.getElementById("next-release");
       var top_wrapper = document.getElementById("top-wrapper");
 
       var nav_btns = document.querySelectorAll('#nav-wrapper .v-btn');
 
       var c1_els = document.getElementsByClassName("c1-part");
-      var c1_flag =
-        window.innerHeight * (2 / 5) > content1.getBoundingClientRect().top;
-      var c2_flag =
-        window.innerHeight * (3 / 5) > content2.getBoundingClientRect().top;
+      var c1_flag = window.innerHeight * (3 / 5) > ramenVisual.getBoundingClientRect().top;
+      var c2_flag = window.innerHeight * (3 / 5) > contents.getBoundingClientRect().top;
+      var c3_flag = window.innerHeight * (3 / 5) > aboutUs.getBoundingClientRect().top;
+      var c4_flag = window.innerHeight * (3 / 5) > nextRelease.getBoundingClientRect().top;
 
-      if (c1_flag && !c2_flag) {
+      if (c1_flag) {
         top_wrapper.style.backgroundColor = "black";
         top_wrapper.style.color = "#FAFAFA";
         for (let i = 0; i < c1_els.length; i++) {
@@ -171,16 +187,32 @@ export default {
           nav_btns[i].classList.remove("black--text");
           nav_btns[i].classList.add("white--text");
         };
-      } else {
-        top_wrapper.style.backgroundColor =
-          "#FAFAFA";
-        top_wrapper.style.color = "black";
-        for (let i = 0; i < c1_els.length; i++) {
-          c1_els[i].classList.remove("show");
+
+        if (c2_flag) {
+          top_wrapper.style.backgroundColor =
+            "#FAFAFA";
+          top_wrapper.style.color = "black";
+          for (let i = 0; i < c1_els.length; i++) {
+            c1_els[i].classList.remove("show");
+          };
+          for (let i = 0; i < nav_btns.length; i++) {
+            nav_btns[i].classList.remove("white--text");
+            nav_btns[i].classList.add("black--text");
+          };
+          setTimeout(() => {
+              this.contentsFlag = true;
+          }, 1000);
         };
-        for (let i = 0; i < nav_btns.length; i++) {
-          nav_btns[i].classList.remove("white--text");
-          nav_btns[i].classList.add("black--text");
+
+        if (c3_flag){
+          setTimeout(() => {
+              this.aboutusFlag = true;
+          }, 1000);
+        };
+        if (c4_flag){
+          setTimeout(() => {
+              this.nextreleaseFlag = true;
+          }, 1000);
         };
       }
     },
@@ -204,10 +236,10 @@ export default {
 #mainVisual {
   background: linear-gradient(to top, lightskyblue, #fff);
 }
-#content1 {
+#ramenVisual {
   position: relative;
 }
-#content1:before {
+#ramenVisual:before {
   content: "";
   display: block;
   padding-top: 100%;
@@ -255,16 +287,25 @@ export default {
   color: black;
 }
 
+.text-title{
+  width: 100%;
+}
+.text-title:before{
+  content: "";
+  display: block;
+  padding-top: 10%;
+}
+
 .content-title{
   margin: 30px auto;
   font-size: 2.5rem;
 }
 
-.content2-item .container{
+.contents-item .container{
   width: 85%;
 }
 
-.content2-item h4{
+.contents-item h4{
   font-size: 2rem;
 }
 
