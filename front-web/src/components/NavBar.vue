@@ -7,6 +7,7 @@
       :inverted-scroll="invertedScroll"
       :scroll-threshold="scrollThreshold"
       :color="color"
+      style="z-index:100;"
     >
       <v-toolbar-title class="text-uppercase grey--text">
         <span class="font-weight-light">FUK</span>
