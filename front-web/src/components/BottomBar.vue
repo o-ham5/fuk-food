@@ -6,6 +6,7 @@
         fixed
         height=40
         horizontal
+        style="z-index: 100;"
     >
         <v-btn rounded :to="{ name: 'home' }">はじめる<v-icon>fas fa-hand-point-up</v-icon></v-btn>
     </v-bottom-navigation>

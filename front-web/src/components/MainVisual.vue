@@ -6,7 +6,7 @@
       src="../assets/fukuoka.png"
       alt="福岡県"
     />
-    <img id="logo" class src="../assets/fukfood-logo.png" alt="fuk-food" />
+    <img id="logo" class src="../assets/Fuk-Food2.svg" alt="fuk-food" width="100%" />
     <div id="parts">
       <img
         id="ramen"
@@ -137,6 +137,9 @@ export default {
   display: block;
   margin: auto;
   padding-top: 5%;
+  position: relative;
+  top: 15%;
+  z-index: 10;
 }
 
 #ramen {

@@ -6,10 +6,11 @@
       :color="color"
     />
     <PreScreen v-if="!display" @set="Setflag"></PreScreen>
-    <v-container v-if="display" fluid class="mb-12">
+    <v-container id="main-wrapper" v-if="display" fluid class="mb-12">
       <BottomBar v-if="bottomBarFlag" />
       <v-row id="mainVisual">
         <MainVisual @bottom-bar="SetBottom" />
+        <div class="dark-mask"></div>
       </v-row>
       <v-row id="ramenVisual" class="my-8">
         <div style="width: 100%;">
@@ -226,15 +227,38 @@ export default {
 };
 </script>
 
-<style scoped>
+<style>
 #top-wrapper {
   transition: 1s;
 }
 
-
+/* #main-wrapper{
+  tran
+} */
 
 #mainVisual {
-  background: linear-gradient(to top, lightskyblue, #fff);
+  position: relative;
+  background: radial-gradient(#ccc, #000);
+}
+
+@keyframes dark_mask_op{
+  0%{
+    background: rgba(0, 0, 0, 0);
+  }
+  100%{
+    background: rgba(0, 0, 0, 0.3);
+  }
+}
+.dark-mask{
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 5;
+  /* background: rgba(0, 0, 0, 0.3); */
+  animation: dark_mask_op 1s 2s;
+  animation-fill-mode: both;
 }
 #ramenVisual {
   position: relative;
