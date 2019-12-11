@@ -258,6 +258,7 @@ export default {
 
   mounted() {
     window.addEventListener("scroll", this.bg_change);
+    this.NoScroll();
   },
   beforeDestroy: function() {
     window.removeEventListener("scroll", this.bg_change);
@@ -318,8 +319,26 @@ export default {
         };
       }
     },
+    handleTouchMove(e) {
+    e.preventDefault();
+    },
+    NoScroll(){
+      //PC用
+      var scroll_event = 'onwheel' in document ? 'wheel' : 'onmousewheel' in document ? 'mousewheel' : 'DOMMouseScroll';
+      document.addEventListener(scroll_event, this.handleTouchMove, {passive: false});
+      //SP用
+      document.addEventListener('touchmove.noScroll', this.handleTouchMove, {passive: false});
+    },
+    ReturnScroll(){
+      //PC用
+      var scroll_event = 'onwheel' in document ? 'wheel' : 'onmousewheel' in document ? 'mousewheel' : 'DOMMouseScroll';
+      document.removeEventListener(scroll_event, this.handleTouchMove, {passive: false});
+      //SP用
+      document.removeEventListener('.noScroll', this.handleTouchMove, {passive: false});
+    },
     Setflag(){
       this.display = true;
+      this.ReturnScroll();
     },
     SetBottom(){
       this.bottomBarFlag = true;
