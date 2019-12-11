@@ -12,7 +12,7 @@
         <MainVisual @bottom-bar="SetBottom" />
         <div class="dark-mask"></div>
       </v-row>
-      <v-row id="ramenVisual" class="my-8">
+      <v-row id="ramenVisual">
         <div style="width: 100%;">
           <img id="ramen_mask" src="../assets/ramen_path.svg" width="80%" />
           <img id="kou" class="c1-part c1-part1" src="../assets/kou.png" width="7%" />
@@ -23,7 +23,7 @@
           </p>
         </div>
       </v-row>
-      <v-row id="contents" class="my-12">
+      <v-row id="contents">
         <div class='text-title'>
           <TextContents v-if="contentsFlag" />
         </div>
@@ -64,7 +64,7 @@
           </v-container>
         </div>
         <div class="contents-item">
-          <v-container fluid>
+          <v-container fluid >
             <v-row>
               <v-col cols=12 md=6>
                 <h4>複数人でぴったりのお店をpick up！</h4>
@@ -87,21 +87,122 @@
           </v-container>
         </div>
       </v-row>
-      <v-row id="about-us" class="my-12">
+      <v-row id="about-us">
         <div class='text-title'>
           <TextAboutUs v-if="aboutusFlag" />
         </div>
-        <div style="width:100%;"></div>
-        <p>
-          あいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえおあいうえお
-        </p>
+        <div class="content-sentence">
+          <p>数学を愛し・数学に愛された者たちの紹介です。</p>
+        </div>
+        <v-container fluid class="container-w90" id="au-items">
+          <v-row>
+            <v-col cols=12 md=6>
+              <v-container>
+                <v-row>
+                  <v-col cols=3>
+                    <div class="au-img-container">
+                      <img class="au-img" src="../assets/red.png" width="100%">
+                    </div>
+                  </v-col>
+                  <v-col cols=9>
+                    <p><span class="au-nickname">ワタナベ</span><br>
+                    <span class="au-position">PM & バックエンド構築</span><br>
+                    <span class="au-language">language: Python, Java, Javascript, HTML, CSS</span><br>
+                    <span class="au-library">library: Pytorch, Django, Flask, SpringBoot, Vue.js</span><br>
+                    <span class="au-tool">tool: Docker, Kubernetes, MySQL, MongoDB</span></p>
+                    <p class="au-message">研究室では深層学習を使った画像処理の研究をやっています。好きなサイトは食べログです！食べログのようなみんなに愛されるようなサイトにしたいと思い頑張りました！</p>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-col>
+            <v-col cols=12 md=6>
+              <v-container fluid>
+                <v-row>
+                  <v-col cols=3>
+                    <div class="au-img-container">
+                      <img class="au-img" src="../assets/ham.jpeg" width="100%">
+                    </div>
+                  </v-col>
+                  <v-col cols=9>
+                    <p><span class="au-nickname">はむ</span><br>
+                    <span class="au-position">Webデザイナー & FE</span><br>
+                    <span class="au-language">language: Python, HTML, CSS, Javascript</span><br>
+                    <span class="au-library">library: jQuery, Vue.js, mo.js, Django, OpenCV</span><br>
+                    <span class="au-tool">tool: Photoshop, GIMP, WordPress</span></p>
+                    <p class="au-message">画像処理や量子コンピュータの研究を行なっています。将来の夢はフロントエンドエンジニア兼喫茶店開業することです。ウェブデザイン技能検定２級。</p>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols=12 md=6>
+              <v-container>
+                <v-row>
+                  <v-col cols=3>
+                    <div class="au-img-container">
+                      <img class="au-img" src="../assets/red.png" width="100%">
+                    </div>
+                  </v-col>
+                  <v-col cols=9>
+                    <p><span class="au-nickname">なりちゃん</span><br>
+                    <span class="au-position">AD (Algorithm Designer)</span><br>
+                    <span class="au-language">language: Python, C++, MATLAB</span><br>
+                    <span class="au-library">library: PuLP, Pytorch, Networkx, sk-learn</span><br>
+                    <span class="au-tool">tool: MATLAB, SCIP, CBC, GUROBI</span></p>
+                    <p class="au-message">最適化理論の社会実装を主に研究しています。 MAPP(matching app)に感銘を受け, レイティングアルゴリズムに興味を持ちました. 最近彼女ができて, 毎日がハピハピハッピーディです。</p>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-col>
+            <v-col cols=12 md=6>
+              <v-container fluid>
+                <v-row>
+                  <v-col cols=3>
+                    <div class="au-img-container">
+                      <img class="au-img" src="../assets/aki.jpeg" width="100%">
+                    </div>
+                  </v-col>
+                  <v-col cols=9>
+                    <p><span class="au-nickname">あき</span><br>
+                    <span class="au-position">UX Designer</span><br>
+                    <span class="au-language">language: Python, C++, HTML, CSS</span><br>
+                    <span class="au-library">library: PyTorch, NetworkX</span><br>
+                    <span class="au-tool">tool: GUROBI</span></p>
+                    <p class="au-message">バイクシェアリングサービスの最適化の研究をしています。日本ビール検定２級。</p>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-col>
+          </v-row>
+          <v-row>
+            <v-col cols=12 md=6>
+              <v-container>
+                <v-row>
+                  <v-col cols=3>
+                    <div class="au-img-container">
+                      <img class="au-img" src="../assets/nopi.jpeg" width="100%">
+                    </div>
+                  </v-col>
+                  <v-col cols=9>
+                    <p><span class="au-nickname">のぴー</span><br>
+                    <span class="au-position">Illustrator</span><br>
+                    <span class="au-language">language: Python (勉強中)</span><br>
+                    <span class="au-library">library: </span><br>
+                    <span class="au-tool">tool: </span></p>
+                    <p class="au-message">最適化か深層学習か研究内容は迷っています。特技はピ○チュウを早く描くことです。ピカ○ュウみたいな愛されキャラを生み出したいです。</p>
+                  </v-col>
+                </v-row>
+              </v-container>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-row>
-      <v-row id="next-release" class="my-12">
+      <v-row id="next-release">
         <div class='text-title'>
           <TextNextRelease v-if="nextreleaseFlag" />
         </div>
-        <div style="width:100%;"></div>
-        <p>
+        <p class="content-sentence">
           行動範囲や予算から，１日の行動プランをご紹介！？ デートプランも！？
         </p>
       </v-row>
@@ -232,9 +333,9 @@ export default {
   transition: 1s;
 }
 
-/* #main-wrapper{
-  tran
-} */
+#main-wrapper > .row{
+  margin-bottom: 300px;
+}
 
 #mainVisual {
   position: relative;
@@ -331,6 +432,92 @@ export default {
 
 .contents-item h4{
   font-size: 2rem;
+}
+
+.content-sentence{
+  width: 100%;
+  text-align: center;
+}
+
+#au-items > .row > .col-12{
+  height: 350px;
+}
+
+#au-items > .row:nth-child(odd) .col-12:nth-child(even),
+#au-items > .row:nth-child(even) .col-12:nth-child(odd){
+  background-color: #ffffea;
+  border-radius: 240px 100px 100px 100px / 75px 150px 50px 200px;
+}
+
+#au-items > .row:nth-child(odd) .col-12:nth-child(odd),
+#au-items > .row:nth-child(even) .col-12:nth-child(even){
+  background-color: #f5f5f5;
+  border-radius: 240px 100px 100px 100px / 75px 150px 50px 200px;
+}
+
+.container-w90{
+  width: 95%;
+}
+
+.au-img-container{
+  display: inline-block;
+  position: relative;
+}
+
+#au-items > .row:nth-child(odd) .col-12:nth-child(even) .au-img-container:after,
+#au-items > .row:nth-child(even) .col-12:nth-child(odd) .au-img-container:after{
+  position: absolute;
+  display: block;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background: #fff; */
+  box-shadow:
+  inset 0 0 20px #ffffea,
+  inset 0 0 20px #ffffea,
+  inset 0 0 20px #ffffea,
+  inset 0 0 20px #ffffea,
+  inset 0 0 20px #ffffea;
+}
+
+#au-items > .row:nth-child(odd) .col-12:nth-child(odd) .au-img-container:after,
+#au-items > .row:nth-child(even) .col-12:nth-child(even) .au-img-container:after{
+  position: absolute;
+  display: block;
+  content: "";
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  /* background: #fff; */
+  box-shadow:
+  inset 0 0 20px #f5f5f5,
+  inset 0 0 20px #f5f5f5,
+  inset 0 0 20px #f5f5f5,
+  inset 0 0 20px #ffffea,
+  inset 0 0 20px #f5f5f5;
+}
+
+.au-img-container{
+  margin-top: 30px;
+}
+
+.au-nickname{
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+
+.au-nickname, .au-position{
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+}
+
+.au-language, .au-library, .au-tool{
+  font-size: 0.8rem;
+  color: #555;
 }
 
 
