@@ -26,39 +26,23 @@
       <v-row id="contents">
         <div class='text-title'>
           <TextContents v-if="contentsFlag" />
+          <img class="meido" src="../assets/meido.png" width="20%">
         </div>
+        <p class="content-sentence">
+          あいうえお
+        </p>
         <div class="contents-item">
           <v-container fluid>
             <v-row>
               <v-col cols=12 md=6>
-                <h4>FUKネーターがあなたの好みを当てちゃいます！</h4>
-                <p class="mt-12">
-                  会員登録をする時，あなたがどんな人なのかをFUKネーターが調査します。<br>
-                  質問には嘘偽りなく答えて...ね？
-                </p>
-              </v-col>
-              <v-col cols=10 md=5>
-                <img src="../assets/green.png" width=100%>
-              </v-col>
-              <v-col cols=2 md=1>
-              </v-col>  
-            </v-row>
-          </v-container>
-        </div>
-        <div class="contents-item">
-          <v-container fluid>
-            <v-row>
-              <v-col cols=12 md=6 order-md="3">
-                <h4>自分の好みに似たユーザーのオススメ店をpick up！</h4>
+                <h4>自分に似たユーザーのオススメ店をpick up！</h4>
                 <p class="mt-12">
                   独自の分析法であなたの好みや性格と似ているユーザーを調査し，その人がよく行くお店を紹介します。<br>
                   登録ユーザー同士で美味しいお店を共有しちゃいましょう！
                 </p>
               </v-col>
-              <v-col cols=2 md=1 order-md="1">
-              </v-col>
-              <v-col cols=10 md=5 order-md="2">
-                <img src="../assets/blue.png" width=100%>
+              <v-col cols=12 md=6>
+                <img src="../assets/gureko1.png" width=100%>
               </v-col>
             </v-row>
           </v-container>
@@ -66,7 +50,7 @@
         <div class="contents-item">
           <v-container fluid >
             <v-row>
-              <v-col cols=12 md=6>
+              <v-col cols=12 md=6 order-md="2">
                 <h4>複数人でぴったりのお店をpick up！</h4>
                 <p class="mt-12">
                   複数人でご飯に行く場合
@@ -78,11 +62,25 @@
                   このアプリでは，みなさんの「ちょうどいい」お店を紹介します。
                 </p>
               </v-col>
-              <v-col cols=10 md=5>
-                <img src="../assets/red.png" width=100%>
+              <v-col cols=12 md=6 order-md="1">
+                <img src="../assets/gureko2.png" width=100%>
               </v-col>
-              <v-col cols=2 md=1>
-              </v-col>  
+            </v-row>
+          </v-container>
+        </div>
+        <div class="contents-item">
+          <v-container fluid>
+            <v-row>
+              <v-col cols=12 md=6>
+                <h4>お店の真の魅力をランキング！</h4>
+                <p class="mt-12">
+                  ユーザの評価に対する信頼度などを独自の最先端手法で分析し，ランキング形式でご紹介。<br>
+                  検索対象を絞れるので，お好きな条件で１位のお店を調べてみよう！
+                </p>
+              </v-col>
+              <v-col cols=12 md=6>
+                <img src="../assets/gureko3.png" width=100%>
+              </v-col>
             </v-row>
           </v-container>
         </div>
@@ -90,6 +88,7 @@
       <v-row id="about-us">
         <div class='text-title'>
           <TextAboutUs v-if="aboutusFlag" />
+          <img class="meido" src="../assets/meido.png" width="20%">
         </div>
         <div class="content-sentence">
           <p>数学を愛し・数学に愛された者たちの紹介です。</p>
@@ -200,13 +199,13 @@
       </v-row>
       <v-row id="next-release">
         <div class='text-title'>
+          <img class="meido" src="../assets/meido.png" width="20%">
           <TextNextRelease v-if="nextreleaseFlag" />
         </div>
         <p class="content-sentence">
           行動範囲や予算から，１日の行動プランをご紹介！？ デートプランも！？
         </p>
       </v-row>
-      <div style="width:100%;height:1000px;"></div>
     </v-container>
   </div>
 </template>
@@ -433,11 +432,43 @@ export default {
 
 .text-title{
   width: 100%;
+  position: relative;
+  margin-bottom: 100px;
 }
 .text-title:before{
   content: "";
   display: block;
   padding-top: 10%;
+}
+
+.text-title .meido{
+  position: absolute;
+  top: 0%;
+  left: 10%;
+  width: 30%;
+}
+
+#next-release .meido{
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 30%;
+}
+
+@media screen and (min-width: 768px){
+  .text-title .meido{
+  position: absolute;
+  top: 40%;
+  left: 24%;
+  width: 20%;
+}
+
+#next-release .meido{
+  position: absolute;
+  top: 0%;
+  left: 20%;
+  width: 20%;
+}
 }
 
 .content-title{
@@ -456,6 +487,7 @@ export default {
 .content-sentence{
   width: 100%;
   text-align: center;
+  font-size: 1.2rem
 }
 
 #au-items > .row > .col-12{
