@@ -320,7 +320,7 @@ export default {
           };
           setTimeout(() => {
               this.contentsFlag = true;
-          }, 1000);
+          }, 500);
           for (let i = 0; i < c2_els.length; i++) {
             if(c2_items_flag[i]){
               this.contents_item.splice(i, 1, true);
@@ -329,9 +329,9 @@ export default {
         };
 
         if (c3_flag){
-          setTimeout(() => {
+          // setTimeout(() => {
               this.aboutusFlag = true;
-          }, 1000);
+          // }, 1000);
           for (let i = 0; i < c3_els.length; i++) {
             if(c3_items_flag[i]){
               this.au_item.splice(i, 1, true);
@@ -340,9 +340,9 @@ export default {
 
         };
         if (c4_flag){
-          setTimeout(() => {
+          // setTimeout(() => {
               this.nextreleaseFlag = true;
-          }, 1000);
+          // }, 1000);
           for (let i = 0; i < c4_els.length; i++) {
             if(c4_items_flag[i]){
               this.nr_item.splice(i, 1, true);
@@ -402,7 +402,7 @@ export default {
 }
 
 #top-wrapper {
-  transition: 1s;
+  transition: 0.5s;
 }
 
 #main-wrapper > .row{
