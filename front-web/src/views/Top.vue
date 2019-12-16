@@ -26,77 +26,76 @@
       <v-row id="contents">
         <div class='text-title'>
           <TextContents v-if="contentsFlag" />
+          <img class="meido" src="../assets/meido.png" width="20%">
         </div>
-        <div class="contents-item">
-          <v-container fluid>
-            <v-row>
-              <v-col cols=12 md=6>
-                <h4>FUKネーターがあなたの好みを当てちゃいます！</h4>
-                <p class="mt-12">
-                  会員登録をする時，あなたがどんな人なのかをFUKネーターが調査します。<br>
-                  質問には嘘偽りなく答えて...ね？
-                </p>
-              </v-col>
-              <v-col cols=10 md=5>
-                <img src="../assets/green.png" width=100%>
-              </v-col>
-              <v-col cols=2 md=1>
-              </v-col>  
-            </v-row>
-          </v-container>
-        </div>
-        <div class="contents-item">
-          <v-container fluid>
-            <v-row>
-              <v-col cols=12 md=6 order-md="3">
-                <h4>自分の好みに似たユーザーのオススメ店をpick up！</h4>
-                <p class="mt-12">
-                  独自の分析法であなたの好みや性格と似ているユーザーを調査し，その人がよく行くお店を紹介します。<br>
-                  登録ユーザー同士で美味しいお店を共有しちゃいましょう！
-                </p>
-              </v-col>
-              <v-col cols=2 md=1 order-md="1">
-              </v-col>
-              <v-col cols=10 md=5 order-md="2">
-                <img src="../assets/blue.png" width=100%>
-              </v-col>
-            </v-row>
-          </v-container>
-        </div>
-        <div class="contents-item">
-          <v-container fluid >
-            <v-row>
-              <v-col cols=12 md=6>
-                <h4>複数人でぴったりのお店をpick up！</h4>
-                <p class="mt-12">
-                  複数人でご飯に行く場合
-                  <ul>
-                    <li>好みがバラバラ</li>
-                    <li>譲り合って決められない</li>
-                  </ul>
-                  そんな経験はないですか...？<br>
-                  このアプリでは，みなさんの「ちょうどいい」お店を紹介します。
-                </p>
-              </v-col>
-              <v-col cols=10 md=5>
-                <img src="../assets/red.png" width=100%>
-              </v-col>
-              <v-col cols=2 md=1>
-              </v-col>  
-            </v-row>
-          </v-container>
+        <div>
+          <p class="section-sentence contents-item" :class="{show:contents_item[0], hidden:!contents_item[0]}">
+            あいうえお
+          </p>
+          <div class="contents-item" :class="{show:contents_item[1], hidden:!contents_item[1]}">
+            <v-container fluid>
+              <v-row>
+                <v-col cols=12 md=6>
+                  <h4>自分に似たユーザーのオススメ店をpick up！</h4>
+                  <p class="mt-12">
+                    独自の分析法であなたの好みや性格と似ているユーザーを調査し，その人がよく行くお店を紹介します。<br>
+                    登録ユーザー同士で美味しいお店を共有しちゃいましょう！
+                  </p>
+                </v-col>
+                <v-col cols=12 md=6>
+                  <img src="../assets/gureko1.png" width=100%>
+                </v-col>
+              </v-row>
+            </v-container>
+          </div>
+          <div class="contents-item" :class="{show:contents_item[2], hidden:!contents_item[2]}">
+            <v-container fluid >
+              <v-row>
+                <v-col cols=12 md=6 order-md="2">
+                  <h4>複数人でぴったりのお店をpick up！</h4>
+                  <p class="mt-12">
+                    複数人でご飯に行く場合
+                    <ul>
+                      <li>好みがバラバラ</li>
+                      <li>譲り合って決められない</li>
+                    </ul>
+                    そんな経験はないですか...？<br>
+                    このアプリでは，みなさんの「ちょうどいい」お店を紹介します。
+                  </p>
+                </v-col>
+                <v-col cols=12 md=6 order-md="1">
+                  <img src="../assets/gureko2.png" width=100%>
+                </v-col>
+              </v-row>
+            </v-container>
+          </div>
+          <div class="contents-item" :class="{show:contents_item[3], hidden:!contents_item[3]}">
+            <v-container fluid>
+              <v-row>
+                <v-col cols=12 md=6>
+                  <h4>お店の真の魅力をランキング！</h4>
+                  <p class="mt-12">
+                    ユーザの評価に対する信頼度などを独自の最先端手法で分析し，ランキング形式でご紹介。<br>
+                    検索対象を絞れるので，お好きな条件で１位のお店を調べてみよう！
+                  </p>
+                </v-col>
+                <v-col cols=12 md=6>
+                  <img src="../assets/gureko3.png" width=100%>
+                </v-col>
+              </v-row>
+            </v-container>
+          </div>
         </div>
       </v-row>
       <v-row id="about-us">
         <div class='text-title'>
           <TextAboutUs v-if="aboutusFlag" />
+          <img class="meido" src="../assets/meido.png" width="20%">
         </div>
-        <div class="content-sentence">
-          <p>数学を愛し・数学に愛された者たちの紹介です。</p>
-        </div>
+        <p class="section-sentence au-item" :class="{show:au_item[0], hidden:!au_item[0]}">数学を愛し・数学に愛された者たちの紹介です。</p>
         <v-container fluid class="container-w90" id="au-items">
           <v-row>
-            <v-col cols=12 md=6>
+            <v-col cols=12 md=6 class="au-item" :class="{show:au_item[1], hidden:!au_item[1]}">
               <v-container>
                 <v-row>
                   <v-col cols=3>
@@ -115,7 +114,7 @@
                 </v-row>
               </v-container>
             </v-col>
-            <v-col cols=12 md=6>
+            <v-col cols=12 md=6 class="au-item" :class="{show:au_item[2], hidden:!au_item[2]}">
               <v-container fluid>
                 <v-row>
                   <v-col cols=3>
@@ -136,7 +135,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols=12 md=6>
+            <v-col cols=12 md=6 class="au-item" :class="{show:au_item[3], hidden:!au_item[3]}">
               <v-container>
                 <v-row>
                   <v-col cols=3>
@@ -155,7 +154,7 @@
                 </v-row>
               </v-container>
             </v-col>
-            <v-col cols=12 md=6>
+            <v-col cols=12 md=6 class="au-item" :class="{show:au_item[4], hidden:!au_item[4]}">
               <v-container fluid>
                 <v-row>
                   <v-col cols=3>
@@ -176,7 +175,7 @@
             </v-col>
           </v-row>
           <v-row>
-            <v-col cols=12 md=6>
+            <v-col cols=12 md=6 class="au-item" :class="{show:au_item[5], hidden:!au_item[5]}">
               <v-container>
                 <v-row>
                   <v-col cols=3>
@@ -200,13 +199,13 @@
       </v-row>
       <v-row id="next-release">
         <div class='text-title'>
+          <img class="meido" src="../assets/meido.png" width="20%">
           <TextNextRelease v-if="nextreleaseFlag" />
         </div>
-        <p class="content-sentence">
+        <p class="section-sentence nr-item" :class="{show:nr_item[0], hidden:!nr_item[0]}">
           行動範囲や予算から，１日の行動プランをご紹介！？ デートプランも！？
         </p>
       </v-row>
-      <div style="width:100%;height:1000px;"></div>
     </v-container>
   </div>
 </template>
@@ -246,6 +245,9 @@ export default {
       contentsFlag: false,
       aboutusFlag: false,
       nextreleaseFlag: false,
+      contents_item: [false, false, false, false],
+      au_item: [false, false, false, false, false, false],
+      nr_item: [false],
     };
   },
   computed: {
@@ -275,8 +277,25 @@ export default {
       var nav_btns = document.querySelectorAll('#nav-wrapper .v-btn');
 
       var c1_els = document.getElementsByClassName("c1-part");
+      var c2_els = document.getElementsByClassName("contents-item");
+      var c3_els = document.getElementsByClassName("au-item");
+      var c4_els = document.getElementsByClassName("nr-item");
+
       var c1_flag = window.innerHeight * (3 / 5) > ramenVisual.getBoundingClientRect().top;
       var c2_flag = window.innerHeight * (3 / 5) > contents.getBoundingClientRect().top;
+      var c2_items_flag = [];
+      for (let i = 0; i < c2_els.length; i++) {
+        c2_items_flag[i] = window.innerHeight * (3 / 5) > c2_els[i].getBoundingClientRect().top;
+      };
+      var c3_items_flag = [];
+      for (let i = 0; i < c3_els.length; i++) {
+        c3_items_flag[i] = window.innerHeight * (3 / 5) > c3_els[i].getBoundingClientRect().top;
+      };
+      var c4_items_flag = [];
+      for (let i = 0; i < c4_els.length; i++) {
+        c4_items_flag[i] = window.innerHeight * (3 / 5) > c4_els[i].getBoundingClientRect().top;
+      };
+
       var c3_flag = window.innerHeight * (3 / 5) > aboutUs.getBoundingClientRect().top;
       var c4_flag = window.innerHeight * (3 / 5) > nextRelease.getBoundingClientRect().top;
 
@@ -284,7 +303,7 @@ export default {
         top_wrapper.style.backgroundColor = "black";
         top_wrapper.style.color = "#FAFAFA";
         for (let i = 0; i < c1_els.length; i++) {
-          c1_els[i].classList.add("show");
+          c1_els[i].classList.add("c1show");
         };
         for (let i = 0; i < nav_btns.length; i++) {
           nav_btns[i].classList.remove("black--text");
@@ -295,9 +314,6 @@ export default {
           top_wrapper.style.backgroundColor =
             "#FAFAFA";
           top_wrapper.style.color = "black";
-          for (let i = 0; i < c1_els.length; i++) {
-            c1_els[i].classList.remove("show");
-          };
           for (let i = 0; i < nav_btns.length; i++) {
             nav_btns[i].classList.remove("white--text");
             nav_btns[i].classList.add("black--text");
@@ -305,22 +321,38 @@ export default {
           setTimeout(() => {
               this.contentsFlag = true;
           }, 1000);
+          for (let i = 0; i < c2_els.length; i++) {
+            if(c2_items_flag[i]){
+              this.contents_item.splice(i, 1, true);
+            };
+          };
         };
 
         if (c3_flag){
           setTimeout(() => {
               this.aboutusFlag = true;
           }, 1000);
+          for (let i = 0; i < c3_els.length; i++) {
+            if(c3_items_flag[i]){
+              this.au_item.splice(i, 1, true);
+            };
+          };
+
         };
         if (c4_flag){
           setTimeout(() => {
               this.nextreleaseFlag = true;
           }, 1000);
+          for (let i = 0; i < c4_els.length; i++) {
+            if(c4_items_flag[i]){
+              this.nr_item.splice(i, 1, true);
+            };
+          };
         };
       }
     },
     handleTouchMove(e) {
-    e.preventDefault();
+      e.preventDefault();
     },
     NoScroll(){
       //PC用
@@ -348,6 +380,27 @@ export default {
 </script>
 
 <style>
+
+@keyframes show{
+  0%{
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.show{
+  animation: show 0.8s;
+  animation-fill-mode: both;
+}
+
+.hidden{
+  opacity: 0;
+}
+
 #top-wrapper {
   transition: 1s;
 }
@@ -405,7 +458,7 @@ export default {
 .c1-part3{
   transition: 1.5s 2s;
 }
-.c1-part.show{
+.c1-part.c1show{
   opacity: 1;
 }
 #kou{
@@ -433,11 +486,43 @@ export default {
 
 .text-title{
   width: 100%;
+  position: relative;
+  margin-bottom: 100px;
 }
 .text-title:before{
   content: "";
   display: block;
   padding-top: 10%;
+}
+
+.text-title .meido{
+  position: absolute;
+  top: 0%;
+  left: 10%;
+  width: 30%;
+}
+
+#next-release .meido{
+  position: absolute;
+  top: 0%;
+  left: 0%;
+  width: 30%;
+}
+
+@media screen and (min-width: 768px){
+  .text-title .meido{
+  position: absolute;
+  top: 40%;
+  left: 24%;
+  width: 20%;
+}
+
+#next-release .meido{
+  position: absolute;
+  top: 0%;
+  left: 20%;
+  width: 20%;
+}
 }
 
 .content-title{
@@ -453,9 +538,10 @@ export default {
   font-size: 2rem;
 }
 
-.content-sentence{
+.section-sentence{
   width: 100%;
   text-align: center;
+  font-size: 1.2rem
 }
 
 #au-items > .row > .col-12{
