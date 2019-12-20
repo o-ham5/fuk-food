@@ -203,8 +203,15 @@
           <TextNextRelease v-if="nextreleaseFlag" />
         </div>
         <p class="section-sentence nr-item" :class="{show:nr_item[0], hidden:!nr_item[0]}">
-          行動範囲や予算から，１日の行動プランをご紹介！？ デートプランも！？
+          次回のアップデートで実装予定の機能を少しだけご紹介！
         </p>
+        <div id="nr-items-wrapper">
+          <div id="nr-items-container">
+            <p class="nr-item" :class="{show:nr_item[1], hidden:!nr_item[1]}">
+              行動範囲や予算から，１日の行動プランをご紹介！？ デートプランも！？
+            </p>
+          </div>
+        </div>
       </v-row>
     </v-container>
   </div>
@@ -247,7 +254,7 @@ export default {
       nextreleaseFlag: false,
       contents_item: [false, false, false, false],
       au_item: [false, false, false, false, false, false],
-      nr_item: [false],
+      nr_item: [false, false],
     };
   },
   computed: {
@@ -492,37 +499,73 @@ export default {
 .text-title:before{
   content: "";
   display: block;
-  padding-top: 10%;
+  padding-top: 15%;
 }
 
 .text-title .meido{
   position: absolute;
   top: 0%;
   left: 10%;
-  width: 30%;
+  width: 140px;
 }
 
 #next-release .meido{
   position: absolute;
-  top: 0%;
+  top: 10%;
   left: 0%;
-  width: 30%;
+  width: 140px;
+}
+
+@media screen and (min-width: 576px){
+  .text-title .meido{
+  top: 35%;
+  left: 18%;
+  width: 140px;
+  }
+
+#next-release .meido{
+  top: 0%;
+  left: 12%;
+  width: 140px;
+  }
 }
 
 @media screen and (min-width: 768px){
   .text-title .meido{
-  position: absolute;
   top: 40%;
   left: 24%;
-  width: 20%;
-}
+  width: 180px;
+  }
 
 #next-release .meido{
-  position: absolute;
-  top: 0%;
-  left: 20%;
-  width: 20%;
+  top: 10%;
+  left: 19%;
+  width: 180px;
+  }
 }
+
+@media screen and (min-width: 992px){
+  .text-title .meido{
+  top: 50%;
+  left: 28%;
+  }
+
+#next-release .meido{
+  top: 20%;
+  left: 23%;
+  }
+}
+
+@media screen and (min-width: 1200px){
+  .text-title .meido{
+  top: 60%;
+  left: 31%;
+  }
+
+#next-release .meido{
+  top: 40%;
+  left: 27%;
+  }
 }
 
 .content-title{
@@ -625,5 +668,31 @@ export default {
   color: #555;
 }
 
+#nr-items-wrapper{
+  margin: 0 auto;
+}
+
+#nr-items-container{
+  position: relative;
+  display: inline-block;
+  padding: 2em 4em;
+  /* background: -webkit-linear-gradient(#fe5f95 , #ff3f7f); */
+  /* background: linear-gradient(#fe5f95 , #ff3f7f); */
+  background-color: #fe7fb5;
+  border: 1px solid #fe3276;
+  border-radius: 10px;
+  
+}
+
+#nr-items-container:after{
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  bottom: 5px;
+  left: 5px;
+  content: '';
+  border: 2px dashed #fff;
+  border-radius: .4em 2em .5em 3em/3em .5em 2em .5em;
+}
 
 </style>
