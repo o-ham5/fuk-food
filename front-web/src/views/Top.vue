@@ -368,6 +368,10 @@ export default {
       //SP用
       document.removeEventListener('.noScroll', this.handleTouchMove, {passive: false});
     },
+    window:onload = function() {  
+      document.body.scrollTop = 0;
+      document.documentElement.scrollTop = 0;
+    },
     Setflag(){
       this.display = true;
       this.ReturnScroll();
