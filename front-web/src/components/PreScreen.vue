@@ -226,11 +226,19 @@ export default {
 
     var el_scale = (ps_width * 3) / 400;
 
+    if(ps_width <= 1200){
+      var top = "80%";
+    }else if(ps_width <= 1400){
+      var top = "90%"
+    }else{
+      var top = "100%"
+    }
+
     const OPTS = {
       parent: "#pre-screen",
       scale: el_scale,
       fill: "none",
-      top: "80%",
+      top: top,
       stroke: "#003233",
       strokeWidth: 60,
       strokeDasharray: "100%",
@@ -244,7 +252,7 @@ export default {
       shape: "fukfood",
       scale: el_scale,
       fill: "white",
-      top: "80%",
+      top: top,
       duration: 1000
       //   stroke: 'black',
       //   strokeWidth: 2,
@@ -431,6 +439,8 @@ export default {
 #pre-screen {
   position: relative;
   width: 100%;
+  overflow: hidden;
+  max-height: 100vh;
 }
 #pre-screen:before {
   content: "";
