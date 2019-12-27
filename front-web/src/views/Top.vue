@@ -29,7 +29,7 @@
           <img class="meido" src="../assets/meido.png" width="20%">
         </div>
         <div>
-          <p class="section-sentence contents-item" :class="{show:contents_item[0], hidden:!contents_item[0]}">
+          <p class="section-sentence contents-item mb-12" :class="{show:contents_item[0], hidden:!contents_item[0]}">
             あいうえお
           </p>
           <div class="contents-item" :class="{show:contents_item[1], hidden:!contents_item[1]}">
@@ -92,8 +92,8 @@
           <TextAboutUs v-if="aboutusFlag" />
           <img class="meido" src="../assets/meido.png" width="20%">
         </div>
-        <p class="section-sentence au-item" :class="{show:au_item[0], hidden:!au_item[0]}">数学を愛し・数学に愛された者たちの紹介です。</p>
-        <v-container fluid class="container-w90" id="au-items">
+        <p class="section-sentence au-item mb-12" :class="{show:au_item[0], hidden:!au_item[0]}">数学を愛し・数学に愛された者たちの紹介です。</p>
+        <v-container fluid class="wid95" id="au-items">
           <v-row>
             <v-col cols=12 md=6 class="au-item" :class="{show:au_item[1], hidden:!au_item[1]}">
               <v-container>
@@ -202,7 +202,7 @@
           <img class="meido" src="../assets/meido.png" width="20%">
           <TextNextRelease v-if="nextreleaseFlag" />
         </div>
-        <p class="section-sentence nr-item" :class="{show:nr_item[0], hidden:!nr_item[0]}">
+        <p class="section-sentence nr-item mb-12" :class="{show:nr_item[0], hidden:!nr_item[0]}">
           次回のアップデートで実装予定の機能を少しだけご紹介！
         </p>
         <div id="nr-items-wrapper">
@@ -494,7 +494,7 @@ export default {
 .text-title{
   width: 100%;
   position: relative;
-  margin-bottom: 100px;
+  margin-bottom: 80px;
 }
 .text-title:before{
   content: "";
@@ -568,9 +568,11 @@ export default {
   }
 }
 
-.content-title{
-  margin: 30px auto;
-  font-size: 2.5rem;
+p.section-sentence{
+  width: 100%;
+  text-align: center;
+  font-size: 1.2rem;
+  margin-bottom: 300px;
 }
 
 .contents-item .container{
@@ -579,12 +581,6 @@ export default {
 
 .contents-item h4{
   font-size: 2rem;
-}
-
-.section-sentence{
-  width: 100%;
-  text-align: center;
-  font-size: 1.2rem
 }
 
 #au-items > .row > .col-12{
@@ -603,7 +599,7 @@ export default {
   border-radius: 240px 100px 100px 100px / 75px 150px 50px 200px;
 }
 
-.container-w90{
+.wid95{
   width: 95%;
 }
 
@@ -670,17 +666,18 @@ export default {
 
 #nr-items-wrapper{
   margin: 0 auto;
+  width: 90%;
 }
 
 #nr-items-container{
   position: relative;
-  display: inline-block;
   padding: 2em 4em;
   /* background: -webkit-linear-gradient(#fe5f95 , #ff3f7f); */
   /* background: linear-gradient(#fe5f95 , #ff3f7f); */
   background-color: #fe7fb5;
   border: 1px solid #fe3276;
   border-radius: 10px;
+  font-size: 1.1rem;
   
 }
 
